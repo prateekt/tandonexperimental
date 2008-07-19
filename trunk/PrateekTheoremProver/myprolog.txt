@@ -1,0 +1,3 @@
+money(x) :- g(x).
+evil(x) :- money(x).
+g(elf).
