@@ -1,0 +1,45 @@
+Ok Prateek, as promised, I'll do my best to provide you with some content about "related work" for your article.  I'm copying Jacq and Ely on here because there is some useful background information here.
+
+I'm listing related organizations here, but the thing is, at the software project level, there is some more specific related work. 
+
+For examples: http://ss12.info/wiki/index.php?title=SS12_Word_Prediction_Software
+
+There are at least 5 other word prediction software, but the reason we built our own is because it offers features (on top of being open source) above and beyond the others.  (Speaking of, when will it be available for use?) :)
+
+OATSoft.org
+
+The only other initiative we have found to date that is similar to ours.  An "open source project" whose sole purpose is to promote and house the development of many assistive technology projects.  OATSoft stand for "Open Source Assistive Technology Software".  A grant-funded "case study" in the UK, and the first of its kind in the world.  That would make Project:Possibility the 2nd of this kind in the world, and the first of its kind in the U.S.  (Though we are really the first organization of our kind in many ways.)
+
+OATSoft Seems quite inactive right now aside from the assistive technology projects that it references (they do list projects external to theirs).  Appears to be little to no active development on any of their "own" assistive technology projects.
+
+The major difference between our organizations is our focus on building the community (both online and local) and also our university programs which engage budding developers and get them to start thinking about assistive technology.
+
+Mozilla Grants Program
+
+Mozilla Foundation is basically giving away "seed money" towards open source projects.  A couple examples:
+http://www.nvda-project.org/
+http://www.oatsoft.org/trac/jambu
+http://live.gnome.org/Orca
+And now, Project:Possibility.  A huge amount of their money is going towards funding the creation of web standards for accessibility (WAI-ARIA) and having them implemented on the Firefox browser.  Internet Explorer has recently followed suit and the next version will accommodate these web standards for accessibility.
+
+Code-A-Thon
+
+http://codeathon.pbwiki.com/
+They are now on their third code-a-thon.  The "League of Technical Voters" and Knowbility, both Texas based non-profits, have organized this event whose purpose is to develop open source projects for non-profit organizations.  There have been accessibility related projects in the past, though none of these Code-A-Thon have been purely accessibility based.  There are also not always industry "mentors" involved in these Code-A-Thons, and they are not competitive like ours are.  Usually, they are preceded by a "Design-A-Thon".
+
+Knowbility
+
+Primarily a non-profit advocacy/awareness group.  Doesn't directly develop assistive technology, but promotes the use of it in many ways different ways.  Also helped to organize a previous Code-A-Thon and supports Project:Possibility's efforts.  Our Assistive Technology search engine was meant for Knowbility's use.
+
+Google Accessibility
+
+This team is focused on making sure Google applications are web-accessible (and thus standards compliant).  They are developing some supporting technologies to ensure this, which they have open sourced.  AxsJAX is the first and most prominent, but there is some debate as to whether this is the "right" way to do things (it's basically a hack and workaround for websites that do not offer accessibility off the bat).
+http://code.google.com/p/google-axsjax/
+
+IBM
+
+IBM is doing a lot of accessibility work and is more focused at the moment on pushing for and garnering support for various open accessibility standards, and less in the actual development and implementation.  They believe the core issue lies within the overall infrastructure of how information is stored, processed, transmitted, and displayed (and that they should be stored, processed, transmitted in a form that ultimately allows its "display" to any user, regardless of their ability or disability).  Our contact at IBM:
+
+Hope that gives some good overall idea of some other "related" organizations at work.  This was high level and a little hand wavy, but it's a start and I'm happy to expand.
+
+Chris

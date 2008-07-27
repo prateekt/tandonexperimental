@@ -1,0 +1,41 @@
+This looks really good. Great job. My only comments are:
+
+1) The other editors will probably say it is 30% - 50% too long.
+
+2) I think you should include some related work about other similar
+projects/organizations, and list why you are different -- i.e., because
+you serve a unique community with very specific needs.
+
+
+3) I'm not sure how the other editors will feel about so much of the
+article being in first person. It reads as a personal account, which I
+think is good, but others may have a problem with. Perhaps tone it down
+a little.
+
+4) It might be a little too... what's the best word... advertising,
+maybe aggrandizing? I agree that it is a great project for a great
+cause, but see 5). Maybe just tone it down a little.
+
+
+5) Sentences like "What a few lines of code can do to improve the lives
+of so many people is truly amazing." and "I first had the privilege of
+hearing about Project Possibility" seem a little over the top to me.
+
+6) You will definitely have to format it according to these guidelines
+before submission:
+http://www.acm.org/crossroads/doc/information/writing.html, with the
+template available here:
+http://oldwww.acm.org/crossroads/submit/ArticleTemplate.zip.
+
+7) You will need to add some references. These should at least be the
+websites you mention in the text, as well as those in 2).
+
+You can/should take or leave any/all of my suggestions above (1-5), but
+do 5 and 6 and then submit it according to this page:
+
+http://oldwww.acm.org/crossroads/submit/
+
+Again, I think the writing, for the most part, is excellent. Very nice job.
+
+Let me know if you have any questions,
+dan
