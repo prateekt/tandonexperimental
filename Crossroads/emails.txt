@@ -1,0 +1,122 @@
+Hi Prateek,
+
+How's things going?
+
+-Chris
+
+Christopher Leung wrote, On 5/7/08 11:40 PM:
+> Hey Prateek,
+>
+> Please read the below email.  A summary of the aspects Dan was interested in highlighting were:
+>
+>     * "good real world experience working with top companies in the field, a.k.a. an in for an interview when they graduate"
+>           o Side note, David Richardson scored an internship with Google through Michael Parker, and another participant got an internship at Adobe thanks to SS12
+>     * "...a concise, interesting article about your project and the experiences of the students who participated"
+>
+> So, as much as I see it worthwhile to shift the focus of this article, I want to stay true to Dan's original interest for this article -- I think Project:Possibility offers the unique combination of working with an industry team lead and coding for a cause.
+>
+> Of course, this doesn't want to end up like a sales pitch for Project Possibility, but I think the fact that you were a participant in both SS12 and Semester Project is really interesting and will captivate the reader.  See: http://www.acm.org/crossroads/doc/information/wg/suggestions.html for more suggestions.  http://www.acm.org/crossroads/doc/information/writing.html  is general really good for a guide to write this article.
+>
+> I think it's entirely appropriate to mention the inspiration for OLPC Hackathon and other future ACM events, but I'd like to keep to the original scope of Dan's request if possible.
+>
+> I hope this works for you.
+>
+> Best,
+> Chris
+>
+> Christopher Leung wrote, On 5/7/08 4:22 PM:
+>> Prateek,
+>>
+>> Please read the below to gain background on this article.
+>>
+>> Lastly, we need to have the article follow guidelines on ACM's website:
+>> http://www.acm.org/crossroads/doc/information/writing.html
+>>
+>> Best,
+>> Chris
+>>
+>>
+>> -------- Original Message --------
+>> Subject: 	Re: Project:Possibility Project Suggestion
+>> Date: 	Sat, 02 Feb 2008 19:21:27 -0800
+>> From: 	dan goldberg <dwg@dwgold.com>
+>> To: 	Christopher Leung <christopher.leung@projectpossibility.org>
+>> References: 	<20080201232555.4D52E2CDA2@rexford.dreamhost.com> <47A52247.3060904@projectpossibility.org>
+>>
+>>
+>> Chris,
+>>
+>> Thanks for getting back to me. This sounds great. This seems like it 
+>> would be a perfect topic for our journal, as it is about (and would be 
+>> by) cs students, an interesting/worthwhile project, and good real world 
+>> experience working with top companies in the field, a.k.a. an in for an 
+>> interview when they graduate. And, of course the article would be 
+>> focusing on your organization, so you guys would get some good exposure 
+>> from our readership too - every student member of the ACM gets a copy.
+>>
+>> I've asked the other editors for opinions on how they think the best way 
+>> to approach this would be. If you send an email to all the students, I'm 
+>> afraid we may get 35 of the same paper submitted, but that may indeed be 
+>> the only way. Do you recall any particular students that seemed extra 
+>> keen on publishing, or do you keep in contact with any that you think 
+>> would be excited about the opportunity to get a publication on their CV?
+>>
+>> I'm going to wait till I hear some thoughts from them, and also have a 
+>> think on it myself for a little bit to see if we can't come up with a 
+>> creative way to produce a concise, interesting article about your 
+>> project and the experiences of the students who participated.
+>>
+>> Thanks again, and I look forward to a future article!!
+>>
+>> dan
+>>
+>> Christopher Leung wrote:
+>> > Hi Dan,
+>> > 
+>> > We'd be more than happy to forward this on to the students.  In fact, we 
+>> > collected student comments at the end of our "SS12" event last semester:
+>> > 
+>> > http://ss12.info/list_comments.php
+>> > 
+>> > I can put you in touch with any or all of these individuals.
+>> > 
+>> > Let me know how you'd like to proceed.  I'll also mention that we feel 
+>> > Project:Possibility is a very unique and empowering opportunity for 
+>> > students to be involved with, so any mention of our non-profit in your 
+>> > article would be fantastic--anything we can do to get the word out.
+>> > 
+>> > Best,
+>> > 
+>> > Chris Leung
+>> > Founder and Chair, Project:Possibility
+>> > 
+>> > 
+>> >> dan goldberg <dwg@dwgold.com>
+>> >>
+>> >> Hi,
+>> >>
+>> >> I'm a phd student in CS at USC and am on the editorial board for the 
+>> >> ACM Student Journal, Crossroads. We are interested in publishing 
+>> >> articles about the experiences students have while working on these 
+>> >> student/industry projects. I am writing to you see if you might 
+>> >> consider mentioning this to the students involved. Please let me know 
+>> >> if you have any questions.
+>> >>
+>> >> dan
+>> > 
+>> > 
+>>
+>> -- 
+>> Daniel W. Goldberg
+>> GIS Research Laboratory
+>> University of Southern California
+>> Kaprielian Hall (KAP) Room 444
+>> Los Angeles, CA 90089-0255
+>> Office: 213-821-0466
+>> Cell: 213-321-2135
+>> Fax: 213-740-9687
+>> http://dwgold.com
+>> dwg@dwgold.com
+>>
+>>
+>>   
