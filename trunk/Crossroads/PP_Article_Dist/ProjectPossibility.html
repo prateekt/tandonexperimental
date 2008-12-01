@@ -1,0 +1,201 @@
+<!-- Article Template for Crossroads -->
+<!-- Written by Gabriel Saldaña, February 15 2006 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Project Possibility -- Code for a Cause</title>
+<!-- Dont forget to put this line, where it embeds the proper style sheet -->
+<link rel="stylesheet" href="http://www1.acm.org/crossroads/includes/article.css" type="text/css" />
+<meta name="keywords" content="article,content,keywords" />
+<meta name="description" content="article brief description" />
+<style type="text/css">
+<!--
+.style1 {
+	font-size: 24px;
+	font-weight: bold;
+}
+-->
+</style>
+</head>
+
+<body>
+<!--This is where the header of the pages is set. This two lines will do it -->
+<!--#include virtual="/crossroads/includes/top.html"-->
+<!--#exec cgi="/crossroads/cgi-bin/path.cgi"--><p></p>
+
+<h1>Project:Possibility -- Code for a Cause</h1>
+
+<p>by <a href="#bio"><em>Prateek Tandon</em></a><br />
+</p>
+<p class="style1"><br />
+Abstract</p>
+<p>	Project:Possibility is a nonprofit, community service project committed to creating open source software for persons with disabilities. Since its inception in the summer of 2007, Project:Possibility has been working on a slew of technologies that aim to improve the lives of persons with disabilities, giving them access to experiences previously unachievable. Notable areas of work include a mobile currency reader for persons who are blind to identify bills at a supermarket, web scripts to construct accessible websites, binary input games for persons with limited mobility, and text readers for use by the dyslexic. All projects are fully open source and free for everyone to use. </p>
+<p> In addition to its application development efforts, Project:Possibility has launched several educational programs at the University of Southern California (USC) to get students involved in the open source community. <br />
+  <br />
+  </p>
+<p class="style1">Article Text<br />
+</p>
+<p> I first heard about Project:Possibility when founder and USC master’s student Christopher Leung contacted me about rallying student interest for the project via the USC ACM student chapter. Leung explained to me the mission of the project and demonstrated the Lunar Tuner project that Project:Possibility had been working on. </p>
+
+<table width="862" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="370" valign="top"><p><span class="style1">Lunar    Tuner</span><br />
+        <img width="364" height="393" src="ProjectPossibility1.jpg" /></p></td>
+    <td width="490" valign="top"><p><strong>Features</strong></p>
+        <ul type="disc">
+          <li>Extremely         high pitch resolution (0.3 Hz)</li>
+          <li>Built         in event-driven screen reader</li>
+          <li>Built         in speech commanding, allowing hands free control</li>
+          <li>Periodic         spoken tuning instructions (tune up, tune up, tune down, tuned...)</li>
+          <li>Real-time         display</li>
+          <li>Tone         generator</li>
+          <li>Multiple         instrument support</li>
+        </ul>
+      <p><strong>Future Plans</strong></p>
+      <ul type="disc">
+          <li>More         instruments</li>
+        <li>Better         Windows support.</li>
+        <li>Mobile         device Implementation</li>
+      </ul></td>
+  </tr>
+</table>
+<p> Lunar Tuner is a guitar tuner that a person who is blind or deaf can use. Lunar Tuner uses CMU Sphinx, a voice recognition technology, to detect the current pitch of the instrument and text-to-speech engine FreeTTS to communicate to the deaf user to tune up or tune down. </p>
+<p> The client for Lunar Tuner was overjoyed with the product. Seeing the ability of software development to make a difference in the lives of people with disabilities, I was immediately sold on Leung’s idea of having a codeathon to get students involved with assistive software development. A semester’s worth of planning culminated in SS.12, a weekend long programming contest that took place on November 17th and 18th, 2007. The contest brought together both graduate and undergraduate students and industry professionals to work on open source assistive technology. </p>
+<table width="862" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="458" valign="top"><p><span class="style1">Mobile    Currency Reader</span><br />
+            <img width="452" height="243" src="ProjectPossibility2.jpg" /></p></td>
+    <td width="393" valign="top"><p><strong>Disability    Addressed: Blindness</strong></p>
+        <p><strong>Features</strong></p>
+      <ul type="disc">
+          <li>The         mobile currency reader accepts an image as an input and attempt to match         it against reference images. </li>
+      </ul>
+      <p><strong>Uses</strong></p>
+      <ul type="disc">
+          <li>The         software will eventually allow individuals to use a cell phone camera to         take a picture of a bill and detect the value of the bill they are         holding.</li>
+    </ul></td>
+  </tr>
+</table>
+<br />
+<table width="862" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="442" valign="top"><p><strong>Disability    Addressed: Blindness</strong></p>
+        <p><strong>Features</strong></p>
+      <ul type="disc">
+          <li>The         AxsJAX framework injects accessibility features into live web pages so         that users of adaptive technologies can experience the same level of         interactivity that other users have of Web 2.0 applications.</li>
+      </ul>
+      <p><strong>Uses</strong></p>
+      <ul type="disc">
+          <li>A         person who is blind can now utilize several Web 2.0 applications with         screen readers.</li>
+        <li>Currently,         we have created scripts for <a href="http://wikipedia.org" target="_blank">Wikipedia</a> and <a href="http://view.websudoku.com/" target="_blank">Web Sudoku</a>.</li>
+      </ul></td>
+    <td width="426" valign="top"><p><span class="style1">AxsJAX</span><br />
+        <img border="0" width="346" height="445" src="ProjectPossibility3.jpg" /></p></td>
+  </tr>
+</table>
+<br />
+<table width="862" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td valign="top"><p><span class="style1">Binary    Input Game</span><br />
+            <img border="0" width="462" height="357" src="ProjectPossibility4.jpg" /></p></td>
+    <td valign="top"><p><strong>Disability    Addressed: Limited Mobility</strong></p>
+        <p><strong>Features</strong></p>
+      <ul type="disc">
+          <li>Real-time         game playable with a single button.</li>
+        <li>Single         button allows you to hit the thrusters on your spaceship and then you         use the gravitational forces of the space objects to guide your         spaceship home.</li>
+      </ul>
+      <p><strong>Uses</strong></p>
+      <ul type="disc">
+          <li>Game         is fully playable by someone who can only move a single body part.</li>
+        <li>An         eye tracker, foot pedal, vocal command system or any other binary input         device can be used to play the game.</li>
+      </ul></td>
+  </tr>
+</table>
+<p>It seemed like we all knew we were working on some greater goal that was larger than the contest itself. </p>
+<p> Participant and USC Sophomore James Myoung liked the team environment at SS.12. &quot;It was really nice because any time anyone had a problem, someone was right there helping him/her. The fact that my team was cool was also a real plus.&quot; He adds that &quot;everyone got along really well and we each brought something unique to the table.&quot; </p>
+<p> There was actually another team working on a binary input game at the contest. They were happy to share their progress with us. Instead of using some external factor such as gravity to serve as the driving force of their playable object, they used a rotating cursor. Pressing a button would accelerate the playable object in the instantaneous direction of the cursor. We collectively benefited by sharing our approaches of navigation using one button. </p>
+<p> Immediately after the contest, Project:Possibility got emails from companies expressing interest in the developed technologies. Google expressed interest in the AxsJAX project and our binary input game was looked into by an eye tracker firm. The benefits for some did not end with the cash prizes from the contest. I know at least two students who got internships after working with the industry professionals who helped the teams. </p>
+<p> And, of course, there was the good cause factor of the event.  The fellow students I worked with felt the event was one of the most rewarding computer science experiences they had. Many would do it again. I certainly would. </p>
+<p> The lesson to be learned from SS.12 was that innovative software that solves real world problems does not require sorcery or mystic brilliance. All you need is a couple motivated computer scientists, a hefty amount of cheese pizza and Red Bull, and a weekend to produce some cutting edge technology. </p>
+<p> One comment several people had about SS.12 was that it was too short. The contest succeeded in exciting people about accessible technology.  However, many participants wanted more time to develop their projects. Thus, the Semester Project programming contest was born. The Semester Project was a semester-long programming contest with milestones, projects plans, and the whole design and development process done right. The Semester Project was a mix of projects from SS.12 and new ideas that people had. </p>
+<table width="862" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="545" valign="top"><p><span class="style1">Intelligent    Word Prediction System</span><br />
+            <img width="554" height="331" src="ProjectPossibility5.jpg" /></p></td>
+    <td width="291" valign="top"><p><strong>Disability    Addressed: Limited Mobility</strong></p>
+        <p><strong>Features</strong></p>
+      <ul type="disc">
+          <li>Word         prediction system that used unigrams, bigrams, and trigrams </li>
+        <li>Corpus         consisted of articles on Wikipedia</li>
+        <li>Learned         from user as they typed</li>
+        <li>On         screen keyboard available for use with eye tracker</li>
+        <li>Prediction         available as a web service</li>
+      </ul>
+      <p><strong>Uses</strong></p>
+      <ul type="disc">
+          <li>The         software would help someone with limited mobility type faster using a         keyboard or some other input device.</li>
+      </ul></td>
+  </tr>
+</table>
+<br />
+<table width="862" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="401" valign="top"><p><span class="style1">Community    Captioning</span><br />
+            <img width="394" height="293" src="ProjectPossibility6.jpg" /></p></td>
+    <td width="517" valign="top"><p><strong>Disability    Addressed: Deafness</strong></p>
+        <p><strong>Features</strong></p>
+      <ul type="disc">
+          <li>Grease         Monkey script that allows captions to be displayed on top of videos on         You Tube.</li>
+        <li>Framework         by which individual people could add captions to You Tube videos.</li>
+      </ul>
+      <p><strong>Uses</strong></p>
+      <ul type="disc">
+          <li>The         software allows persons who are deaf to enjoy You Tube videos.</li>
+    </ul></td>
+  </tr>
+</table>
+<br />
+<p> The Semester Project was an equally valuable experience. I got a chance to work on Word Prediction software for the Semester Project. </p>
+<p> Word prediction is a broad field with a multitude of applications, even outside of assistive technology. The problem of Word Prediction is given a semi-completed word, predict the full word that the user is trying to type. The cool thing is that any strides made in word prediction for persons with disabilities (much like strides many types of assistive technologies) may bring benefits to technologies in the mainstream. Improvements in word prediction algorithms for persons with disabilities could be ported to cell phones to enable better prediction for text messaging. For the purpose of the semester project, the context we addressed was word prediction techniques to help persons with limited mobility type faster on a keyboard. </p>
+<p> Our word prediction system improved upon existing systems in several ways. First it extracted its English word frequency rankings from Wikipedia. Wikipedia is a good baseline because it has text on every subject known to man and thus can predict, to a large extent, the subject matter of what the user is trying to type. Second, the word prediction scheme learns from the user’s choices. So if there are words the user constantly likes to type, the words will influence the recommendations given by word prediction. Thirdly, our word prediction system is offered as a web service making it available to developers in general for use in their own applications. Lastly, we integrated the entire word prediction system with an on screen keyboard for use with an eye tracker. A person with limited mobility would be able to use the eye tracker to type with their eyes. Predictions regarding what they are trying to type would then show up. </p>
+<p> One of my team members and USC Junior David Luke Richardson had the opportunity to attend the annual California State University Northridge Technology & Persons with Disabilities Conference to gather feedback on our word prediction system design. Richardson states that &quot;People seemed generally impressed by the design. There were industry professionals who came up and said they were impressed by the functionality that we provided, even compared to their own commercial products.&quot; </p>
+<p> The Semester project had it triumphs, yet it also had its challenges. The fact that the contest spanned an entire semester tested the patience and perseverance of participants. As key student lead of the Community Captioning project and Masters Student Raed Shomali found, &quot;the Semester Project was a difficult learning experience working with languages and tools people hadn’t worked with before.&quot; His team suffered setbacks when half of the original team dropped due to the normal semester hustle and bustle. </p>
+<p> Shomali describes that the people who stayed on seemed to have a &quot;passion for developing software and a determination to never give up. These people enjoyed the opportunity and had fun because they were not only doing it for themselves but because they believed the project was useful and had great potential.&quot; His team’s passion was evident as, despite their hardships, the Community Captioning team still came out as one of the top teams in the competition. </p>
+<p> Like many others in the contest, my experiences with Project:Possibility have influenced deeply how I view software development and computer science in general. Before, I used to think large software projects that changed the view people did things could only really happen with a profit motive. I always thought that organizations like Mozilla and Linux were the exception. Yet, in my own university backyard, Project:Possibility has flourished, looking to emerge as the next revolutionary open source society. </p>
+<p> There are certainly other organizations that have worked on problems in open source accessibility technology.  The Open Source Assistive Technology Software (OATSoft) is a grant-funded case-study in the UK to help develop assistive technology. Knowbility, a non-profit advocacy/awareness group promotes the use of assistive technology in many forums. The Google Accessibility Team has been working to ensure Google applications are web accessible. Groups at IBM have been pushing for various broad accessibility standards. </p>
+<p> The major difference between these organizations is Project:Possibility’s unique focus on building an open source community both online and locally that solicits the help of industry and academia to engage budding developers and persons with disabilities in thinking about assistive technology. Project:Possibility works with individuals - building software that individual people with disabilities with disabilities will personally find useful. Moreover, Project:Possibility aims to inspire individual developers to make a difference in their spare time. Individual developers need to know that a few line of code can make a profound difference in the lives of very many people. </p>
+<p> Leung states, &quot;The existence of Project:Possibility sends a profound message to all software developers that they can make a significant difference with their skill. Disabilities is just the context we work in, but really we hope that people realize that they have the power to make a difference. We hope people take time out of their for-profit ventures and give back to the community.&quot;</p>
+
+
+
+<h2>References</h2>
+<dl>
+
+<dt><strong>1</strong><a name="target"></a></dt>
+<dd>Google Accessibility. http://labs.google.com/accessible/ (20 July 2008).</dd>
+<dt><strong>2</strong><a name="target"></a></dt>
+<dd>Huggins-Daines, David . "The CMU Sphinx Group Open Source Speech Recognition Engines." http://cmusphinx.sourceforge.net/html/cmusphinx.php (accessed July 20, 2008).</dd>
+<dt><strong>3</strong><a name="target"></a></dt>
+<dd>IBM Human Ability and Accessibility Center. IBM. http://www-03.ibm.com/able/ (20 July 2008).</dd>
+<dt><strong>4</strong><a name="target"></a></dt>
+<dd>Knowbility, "Accessibility Consulting, Training and Advocacy to Support the Independence of People with Disabilities." 1998.http://www.knowbility.org/main/ (accessed July 20, 2008).</dd>
+<dt><strong>5</strong><a name="target"></a></dt>
+<dd>Leung, Chris. "Project Possibility." Aug 10 2007.http://projectpossibility.org/ (accessed July 20, 2008).</dd>
+<dt><strong>6</strong><a name="target"></a></dt>
+<dd>Leung, Chris. "SS.12." Oct 1 2007.http://ss12.info/ (accessed July 20, 2008).</dd>
+<dt><strong>7</strong><a name="target"></a></dt>
+<dd>Lieuallen, Anthony . "Greasemonkey 0.8.20080609.0." June 12, 2008. https://addons.mozilla.org/en-US/firefox/addon/748 (accessed July 20, 2008).</dd>
+<dt><strong>8</strong><a name="target"></a></dt>
+<dd>Sun Microsystems., "FreeTTS 1.2 - A speech synthesizer written entirely in the JavaTM programming language." 2001.http://freetts.sourceforge.net/docs/index.php (accessed July 20, 2008).</dd>
+<dt><strong>9</strong><a name="target"></a></dt>
+<dd>The OATS Project Consortium, "OATS - Open Source Assistive Technology Software." 2004. http://www.oatsoft.org/ (accessed July 20, 2008).</dd>
+
+<h2><br />
+  Biography</h2>
+<p>Prateek Tandon is an undergraduate student in Computer Engineering, Computer Science at the University of Southern California in his third year. Inspired by his participation with programming contests sponsored by Project:Possibility, he now serves on the executive board. He also takes part in the local ACM programming contest, works on artificial intelligence research, and is learning guitar.</p>
+
+<!--#include virtual="/crossroads/includes/bottom.html"-->
+</dl>
+</body>
+</html>
