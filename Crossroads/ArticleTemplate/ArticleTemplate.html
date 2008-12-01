@@ -1,0 +1,82 @@
+<!-- Article Template for Crossroads -->
+<!-- Written by Gabriel Saldaña, February 15 2006 -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Article Title</title>
+<!-- Dont forget to put this line, where it embeds the proper style sheet -->
+<link rel="stylesheet" href="http://www1.acm.org/crossroads/includes/article.css" type="text/css" />
+<meta name="keywords" content="article,content,keywords" />
+<meta name="description" content="article brief description" />
+</head>
+
+<body>
+<!--This is where the header of the pages is set. This two lines will do it -->
+<!--#include virtual="/crossroads/includes/top.html"-->
+<!--#exec cgi="/crossroads/cgi-bin/path.cgi"--><p></p>
+
+<h1>Article Title</h1>
+
+<p><img src="gfx/articleglyph.jpg" alt="Article Glyph" style="float:right"/></p>
+
+<p>by <a href="#bio"><em>Author Name</em></a></p>
+
+<p>Article text goes in here. In case you have to use &quot;quotation marks&quot; use this &amp;quot; syntax. The same goes for &lt;,&gt; and &amp; symbols outside HTML tags. Also, very important, use <strong>&lt;strong&gt;</strong> tag for bold text and <em>&lt;em&gt;</em> tag for italics.</p>
+
+<p>Every paragraph goes inside the p tags and in case you have to center text or image. Use the sytle:&quot;text-align:center&brvbar;right&brvbar;left&quot; attribute inside the &lt;p&gt; tag to align elements.</p>
+
+<p style="text-align:center">Centered Text</p>
+
+<p>When using references, put your reference number in brackets, and follow the code in the link to match the reference at the bottom [<a href="#target">1</a>]</p>
+
+<p>Lists should be handled without any attributes inside the tags:</p>
+<ul>
+<li>Item</li>
+<li>Item</li>
+<li>Item</li>
+<li>Item</li>
+</ul>
+
+<ol>
+<li>Item</li>
+<li>Item</li>
+<li>Item</li>
+<li>Item</li>
+</ol>
+
+<p>In the case of tables, they go without any border attributes and with a summary attribute like this:</p>
+<table>
+<tr>
+<td>Text</td>
+<td>Text</td>
+<td>Text</td>
+</tr>
+<tr>
+<td>Text</td>
+<td>Text</td>
+<td>Text</td>
+</tr>
+</table>
+
+<p>Images always go inside &lt;p&gt; tags, just like the article glyph at the beginning of the article. Never inside a table.</p>
+
+<p>At the end of the article, the references and biographies goes like this:</p>
+
+<h2>References</h2>
+<dl>
+
+<dt><strong>1</strong><a name="target"></a></dt>
+
+<dd>Author name<em>document title</em>, date published, &lt;<a
+href="http://www.acm.org"
+>URL to document</a>&gt;.</dd>
+
+<h2>Biography</h2>
+<p>Author bio goes here</p>
+
+<!--#include virtual="/crossroads/includes/bottom.html"-->
+
+</dl></body>
+</html>
