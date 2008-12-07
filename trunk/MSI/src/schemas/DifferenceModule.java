@@ -6,6 +6,15 @@ import util.*;
 import util.*;
 import gui.*;
 
+/**
+ * The difference module compares the history of observed control
+ * variables and simulated control variables and determines the discounted
+ * difference for each hypothesized mental state. Relays this
+ * information to the estimated mental state schema which will compute
+ * the probabilities of the belief states.
+ * @author Prateek Tandon
+ *
+ */
 public class DifferenceModule extends BrainSchema {
 	
 	/**
@@ -43,6 +52,9 @@ public class DifferenceModule extends BrainSchema {
 	 */
 	private GUISchema gm;
 	
+	/**
+	 * Constructor
+	 */
 	public DifferenceModule() {
 		super("Difference Module");
 		fmList = Collections.synchronizedList(new ArrayList<ForwardModel>());
@@ -66,6 +78,10 @@ public class DifferenceModule extends BrainSchema {
 		pcInputDisposable = new ConcurrentLinkedQueue<ParietalCortexOutput>();
 	}
 	
+	/**
+	 * Used by forward model to send input to dm.
+	 * @param input
+	 */
 	public void sendFMInput(ControlVariableSummary input) {
 //		this.printDebug("Received Forward Model info from " + input.getSender().getName());
 		int index = fmToIndex.get(input.getSender());
@@ -74,6 +90,10 @@ public class DifferenceModule extends BrainSchema {
 //		receivedInput();
 	}
 	
+	/**
+	 * Used by parietal cortex to send input to dm.
+	 * @param input
+	 */
 	public void sendPCInput(ParietalCortexOutput input) {
 //		this.printDebug("Received parietal input of real cvs");
 		obsCVs.add(input);
@@ -81,7 +101,13 @@ public class DifferenceModule extends BrainSchema {
 		receivedInput();
 	}
 	
-	public double computeDiscountedDifference(List<ControlVariableSummary> simCVs, List<ParietalCortexOutput> realCVs) {
+	/**
+	 * Helper method to compute discounted difference
+	 * @param simCVs The list of simulated control variables
+	 * @param realCVs The list of real control variables
+	 * @return Discounted difference
+	 */
+	private double computeDiscountedDifference(List<ControlVariableSummary> simCVs, List<ParietalCortexOutput> realCVs) {
 		int n = realCVs.size();
 		double a = 0.9;
 		
@@ -104,20 +130,67 @@ public class DifferenceModule extends BrainSchema {
 		return coeff * sumTerm; 		
 	}
 	
-	private List<ControlVariableSummary> queueToList_cv(Queue<ControlVariableSummary> queue) {
+	/**
+	 * Converts control variables queue to list.
+	 */
+	private List<ControlVariableSummary> queueToList_cv(Queue<ControlVariableSummary> queue, int size) {
+		List<ControlVariableSummary> total = new ArrayList<ControlVariableSummary>();
+		total.addAll(queue);
+		
 		List<ControlVariableSummary> rtn = new ArrayList<ControlVariableSummary>();
-		rtn.addAll(queue);
+		for(int x=0; x < size; x++) {
+			rtn.add(total.get(x));
+		}
+	
 		return rtn;
 	}
 	
+	/**
+	 * Converts parietal cortex output queue to list.
+	 */
 	private List<ParietalCortexOutput> queueToList_pc(Queue<ParietalCortexOutput> queue) {
 		List<ParietalCortexOutput> rtn = new ArrayList<ParietalCortexOutput>();
 		rtn.addAll(queue);
 		return rtn;
 	}
 	
+	/**
+	 * Helper method that generates output that is own object
+	 * in clean manner.
+	 * Avoids concurrent modification exceptions.
+	 * @return difference module output
+	 */
+	private DifferenceModuleOutput getOutput() {
+		List<FMDDPair> rtn = new ArrayList<FMDDPair>();
+		
+		//these are the queues that contain summaries for each
+		//forward model
+		for(Queue<ControlVariableSummary> simCVs : predCVs) {
+			double dd = computeDiscountedDifference(queueToList_cv(simCVs, obsCVs.size()), queueToList_pc(obsCVs));
+			FMDDPair toAdd = new FMDDPair(simCVs.peek().getSender().getName(), dd);
+			rtn.add(toAdd);
+		}
+
+		DifferenceModuleOutput output = new DifferenceModuleOutput(rtn, obsCVs.size());
+		return output;
+	}
+	
+	/**
+	 * Produces necessary outputs based on inputs.
+	 */
 	public boolean produceOutput() {
-				
+		
+		//handle reset case
+		if(resetSignals.size() > 0) {
+			resetSignals.clear();
+			for(Queue<ControlVariableSummary > q : predCVs) {
+				q.clear();
+			}
+			obsCVs.clear();
+			pcInputDisposable.clear();
+			return false;
+		}
+		
 		//do callback on getting new observations
 		//timescales of obscv and predcv are different w/ predcv
 		//much faster. Callback on obscv.
@@ -134,30 +207,35 @@ public class DifferenceModule extends BrainSchema {
 			if(obsCVs.size() > 0 && minInPred >= obsCVs.size()) {
 //				this.printDebug("Computing discounted differences: ");
 				ParietalCortexOutput pcIn = pcInputDisposable.remove();
-				
-				List<FMDDPair> rtn = new ArrayList<FMDDPair>();
-				for(Queue<ControlVariableSummary> simCVs : predCVs) {
-					double dd = computeDiscountedDifference(queueToList_cv(simCVs), queueToList_pc(obsCVs));
-					FMDDPair toAdd = new FMDDPair(simCVs.peek().getSender(), dd);
-					rtn.add(toAdd);
-//					this.printDebug("DEF");
-	//				this.printDebug(toAdd.getForwardModel().getName() + "::" + toAdd.getDiscountedDifference());
-	//				this.printDebug("ENDDEF");
-				}
-				
-				DifferenceModuleOutput output = new DifferenceModuleOutput(rtn);
-				
+								
 				//send to Estimated Mental State
-				estimatedMentalState.sendDMOutput(output);			
+				DifferenceModuleOutput output1 = this.getOutput();
+				estimatedMentalState.sendDMOutput(output1);
+				
+				
+				//send dd's to gui
+				DifferenceModuleOutput output2 = this.getOutput();
+				gm.sendDMInput(output2);
 
-				//send current control variables to GUI
-				for(Queue<ControlVariableSummary> simCVs : predCVs) {
-					if(simCVs.peek().getSender()==Constants.getForwardModels().get(1)) {
-						List<ControlVariableSummary> list = queueToList_cv(simCVs);
-						gm.sendFMInput(list.get(obsCVs.size()-1));
-						break;
-					}
+				//get simulated control variables
+				Map<String, Double> simDOC = new HashMap<String, Double>();
+				Map<String, Double> simOA = new HashMap<String, Double>();
+				int timeStep =obsCVs.size();
+				for(Queue<ControlVariableSummary> queue : predCVs) {
+					List<ControlVariableSummary> listRep = queueToList_cv(queue, obsCVs.size());
+					ControlVariableSummary last = listRep.get(listRep.size()-1);
+					simDOC.put(last.getSender().getName(), last.getDistanceFromCenter());
+					simOA.put(last.getSender().getName(),last.getOrientationDifference());
 				}
+				
+				//get observed control variables
+				List<ParietalCortexOutput> listRep = queueToList_pc(obsCVs);
+				ParietalCortexOutput current = listRep.get(listRep.size()-1);
+				double realDOC = current.getDistanceFromCenter();
+				double realOA = current.getOrientationAngleDifference();
+				
+				//send observed and simulated control variables to GUI
+				gm.sendDMCurrentVars(realDOC, realOA, simDOC, simOA, timeStep);
 				
 				return true;
 			}
@@ -166,14 +244,26 @@ public class DifferenceModule extends BrainSchema {
 		return false;
 	}
 	
+	/**
+	 * Sets connection to the forward models in the simulation
+	 * @param fmList The forward models
+	 */
 	public void setForwardModels(List<ForwardModel> fmList) {
 		this.fmList = fmList;
 	}
 	
+	/**
+	 * Sets connection to the estimated mental state schema
+	 * @param estimatedMentalState The estimated mental state schema
+	 */
 	public void setEstimatedMentalState(EstimatedMentalState estimatedMentalState) {
 		this.estimatedMentalState = estimatedMentalState;
 	}
 	
+	/**
+	 * Sets connection to the gui schema
+	 * @param gm  The gui schema
+	 */
 	public void setGuiSchema(GUISchema gm) {
 		this.gm = gm;
 	}

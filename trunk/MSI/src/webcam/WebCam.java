@@ -1,141 +1,97 @@
 package webcam;
-import javax.media.*;
-import javax.media.format.*;
-import javax.media.util.*;
-import javax.media.control.*;
+
+import java.awt.image.BufferedImage;
+
+import schemas.BrainSchema;
+import schemas.VisualCortex;
+import util.Constants;
 import java.awt.*;
-import java.awt.image.*;
-import java.util.*;
-import javax.swing.*;
-import schemas.*;
-import util.*;
 
-public class WebCam extends BrainSchema {
-
-	private Player player = null;
-	private CaptureDeviceInfo di = null;
-	private MediaLocator ml = null;
-	private BufferToImage btoi = null;
-	private Component cameraFeed = null;
-	private VisualCortex vc;
-		
-	public WebCam() {
+/**
+ * Web cam base class. You can hook my MSI model up to real live
+ * web cam input via the real web cam class or feed it a folder of
+ * images using the mock web cam class.
+ * @author Prateek Tandon
+ *
+ */
+public abstract class WebCam extends BrainSchema {
+	
+	/**
+	 * Whether wecam is active or not.
+	 */
+	private boolean on = false;
+	
+	/**
+	 * The visual cortex connection.
+	 */
+	protected VisualCortex vc;
+	
+	/**
+	 * The constructor
+	 */
+	public WebCam(){
 		super("Web Cam");
-		String str2 = "vfw:Microsoft WDM Image Capture (Win32):0";
-		di = CaptureDeviceManager.getDevice(str2);
-		ml = di.getLocator();
-		try {
-		  player = Manager.createRealizedPlayer(ml);
-		  player.start();
-		  if ((cameraFeed = player.getVisualComponent()) != null) {
-			System.out.println("Camera started.");
-		  }
-		  Thread.sleep(5000);
-		}
-		catch (Exception e)    {
-		  e.printStackTrace();
-		}
-	}
-
-	public Component getCameraFeed() {
-		return cameraFeed;
 	}
 	
+	/**
+	 * Sends images to visual cortex based on the clock constant.
+	 */
 	public boolean produceOutput() {
+		
+		//reset case
+		if(resetSignals.size()> 0) {
+			resetSignals.clear();
+			on = false;
+		}
+		
+		//produce image
 		try {
-//			this.printDebug("Sending visual to visual cortex");
-			java.util.List<BufferedImage> currentImageCopies = grabFrame(4);
-			vc.input(currentImageCopies);
-			Thread.sleep(Constants.CLOCK);			
-			return true;
+			if(on) {
+				java.util.List<BufferedImage> currentImageCopies = grabFrame(4);
+				if(currentImageCopies.size() >0)
+					vc.input(currentImageCopies);
+				Thread.sleep(Constants.CLOCK);	
+				return true;
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
-			return false;
 		}
-	}
-
-	public java.util.List<BufferedImage> grabFrame(int numCopies) {
-		//Return list
-		java.util.List<BufferedImage> rtn = new ArrayList<BufferedImage>();
-
-		// Grab a frame
-		FrameGrabbingControl fgc = (FrameGrabbingControl) player.getControl("javax.media.control.FrameGrabbingControl");
-		Buffer buf = fgc.grabFrame();
-
-		// Convert it to an image
-		btoi = new BufferToImage((VideoFormat)buf.getFormat());
-
-		for(int x=0; x < numCopies; x++) {
-			rtn.add(toBufferedImage(btoi.createImage(buf)));
-		}
-
-		return rtn;
-	}
-
-	public static boolean hasAlpha(Image image) {
-		// If buffered image, the color model is readily available
-		if (image instanceof BufferedImage) {return ((BufferedImage)image).getColorModel().hasAlpha();}
-
-		 // Use a pixel grabber to retrieve the image's color model;
-		 // grabbing a single pixel is usually sufficient
-		 PixelGrabber pg = new PixelGrabber(image, 0, 0, 1, 1, false);
-		 try {
-			 pg.grabPixels();
-		 } catch (InterruptedException e) {
-			 e.printStackTrace();
-		 }
-
-		 // Get the image's color model
-		 return pg.getColorModel().hasAlpha();
-	}
-
-	public static BufferedImage toBufferedImage(Image image) {
-		if (image instanceof BufferedImage) {return (BufferedImage)image;}
-		// This code ensures that all the pixels in the image are loaded
-		image = new ImageIcon(image).getImage();
-
-		// Determine if the image has transparent pixels
-		boolean hasAlpha = hasAlpha(image);
-
-		// Create a buffered image with a format that's compatible with the screen
-		BufferedImage bimage = null;
-		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		try {
-			// Determine the type of transparency of the new buffered image
-			int transparency = Transparency.OPAQUE;
-			if (hasAlpha == true) {
-				transparency = Transparency.BITMASK;
-			}
-			// Create the buffered image
-			GraphicsDevice gs = ge.getDefaultScreenDevice();
-			GraphicsConfiguration gc = gs.getDefaultConfiguration();
-			bimage = gc.createCompatibleImage(image.getWidth(null), image.getHeight(null), transparency);
-		}
-		catch (HeadlessException e) {} //No screen
-
-		if (bimage == null) {
-			// Create a buffered image using the default color model
-			int type = BufferedImage.TYPE_INT_RGB;
-			if (hasAlpha == true) {type = BufferedImage.TYPE_INT_ARGB;}
-			bimage = new BufferedImage(image.getWidth(null), image.getHeight(null), type);
-		}
-
-		// Copy image to buffered image
-		Graphics g = bimage.createGraphics();
-		// Paint the image onto the buffered image
-		g.drawImage(image, 0, 0, null);
-		g.dispose();
-
-		return bimage;
+		return false;
 	}
 	
+	/**
+	 * Connection to visual cortex
+	 * @param vc The visual cortex
+	 */
 	public void setVisualCortex(VisualCortex vc) {
 		this.vc = vc;
 	}
+	
+	/**
+	 * Returns a panel for the gui showing the camera output.
+	 * @return
+	 */
+	public abstract Component getCameraFeed();	
+	
+	/**
+	 * Used to return many copies of the same frame.
+	 * @param numCopies Number of copies of the frame to get.
+	 * @return List of frame images
+	 */
+	public abstract java.util.List<BufferedImage> grabFrame(int numCopies);
 
-	public void playerclose() {
-		player.close();
-		player.deallocate();
+	/**
+	 * @return the on
+	 */
+	public boolean isOn() {
+		return on;
+	}
+
+	/**
+	 * @param on the on to set
+	 */
+	public void setOn(boolean on) {
+		this.on = on;
 	}
 }

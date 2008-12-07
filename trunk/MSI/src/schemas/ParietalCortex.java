@@ -5,6 +5,12 @@ import util.Vector2;
 import java.util.*;
 import java.util.concurrent.*;
 
+/**
+ * The parietal cortex computes control variables based on the 
+ * color segmented blobs from the visual cortex. 
+ * @author Prateek Tandon
+ *
+ */
 public class ParietalCortex extends BrainSchema {
 	
 	/**
@@ -61,10 +67,21 @@ public class ParietalCortex extends BrainSchema {
 	 */
 	public void sendTaskParameter(PrefrontalCortexOutput input) {
 		pfcInput.add(input);
-		receivedInput();
+		receivedInput();		
 	}
 	
+	/**
+	 * Produces necessary outputs based on received inputs.
+	 */
 	public boolean produceOutput() {
+		if(resetSignals.size() > 0) {
+			resetSignals.clear();
+			vcInput.clear();
+			pfcInput.clear();
+			taskParameter = -1;
+			sentInitToPC = false;
+			return false;
+		}
 		
 		//change task parameter based on
 		//what pfc says.
@@ -72,6 +89,7 @@ public class ParietalCortex extends BrainSchema {
 			PrefrontalCortexOutput output = pfcInput.remove();
 			taskParameter = output.getTaskParameter();
 			sentInitToPC = false;
+			return false;
 		}
 
 		//only process vc output if 
@@ -100,7 +118,12 @@ public class ParietalCortex extends BrainSchema {
 		return false;
 	}
 
-	public ParietalCortexOutput getOutput(VisualCortexOutput input) {
+	/**
+	 * Helper method to generate output struct.
+	 * @param input Input from visual cortex output
+	 * @return My output
+	 */
+	private ParietalCortexOutput getOutput(VisualCortexOutput input) {
 
 		//hammer handle vector
 		LargestBlob green = input.getGreenTag();
@@ -144,10 +167,18 @@ public class ParietalCortex extends BrainSchema {
 		return rtn;
 	}	
 	
+	/**
+	 * Connection to premotor cortex
+	 * @param pc Premotor cortex
+	 */
 	public void setPremotorCortex(PremotorCortex pc) {
 		this.pc = pc;
 	}
 	
+	/**
+	 * Connection to difference module
+	 * @param dm Difference Module
+	 */
 	public void setDifferenceModule(DifferenceModule dm) {
 		this.dm = dm;
 	}

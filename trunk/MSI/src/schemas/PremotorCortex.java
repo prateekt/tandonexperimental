@@ -3,14 +3,48 @@ import java.util.*;
 import schema_output.*;
 import java.util.concurrent.*;
 
+/**
+ * The premotor cortex computes movement signals based
+ * on the forward model input. In mental state inference,
+ * the movement signals do not actually move the organism's
+ * actuators. Instead, they serve as feedback to the forward
+ * models to continue simulating.
+ * @author Prateek Tandon
+ *
+ */
 public class PremotorCortex extends BrainSchema {
 	
+	/**
+	 * Received inputs from the prefrontal cortex. Based on the 
+	 * task parameter of the prefrontal cortex, the premotor cortex
+	 * can be on or off in mental state inference mode. If this was
+	 * a robot, the switch could go back into actor mode.
+	 */
 	private Queue<PrefrontalCortexOutput> pfcInput;
+	
+	/**
+	 * Received inputs from the parietal cortex.
+	 */
 	private Queue<ParietalCortexOutput> pcInput;
+
+	/**
+	 * Received inputs from the forward models.
+	 */
 	private Queue<ControlVariableSummary> fmInput;
+
+	/**
+	 * The current task parameter.
+	 */
 	private double currentTaskParameter = 0.0;
+
+	/**
+	 * Connection to forward models
+	 */
 	private List<ForwardModel> forwardModels;
 	
+	/**
+	 * Constructor
+	 */
 	public PremotorCortex() {
 		super("Premotor Cortex");
 		pfcInput = new ConcurrentLinkedQueue<PrefrontalCortexOutput>();
@@ -18,23 +52,38 @@ public class PremotorCortex extends BrainSchema {
 		fmInput = new ConcurrentLinkedQueue<ControlVariableSummary>();
 	}
 	
+	/**
+	 * Used by parietal cortex to send input to this schema.
+	 * @param input The input from parietal cortex
+	 */
 	public void sendPCInput(ParietalCortexOutput input) {
 		this.printDebug("Received parietal input");
 		pcInput.add(input);
 		receivedInput();
 	}
 	
+	/**
+	 * Used by Prefrontal cortex to send input to this schema
+	 * @param input The input from the prefrontal cortex
+	 */
 	public void sendPFCInput(PrefrontalCortexOutput input) {
 		pfcInput.add(input);
 		receivedInput();
 	}
 	
+	/**
+	 * Used by forward models to send input to this schema
+	 */
 	public void sendFMInput(ControlVariableSummary input) {
 		fmInput.add(input);
 		receivedInput();
 	}
 	
-	public String computeMovementSignal() {
+	/**
+	 * Helper method to compute movement signal.
+	 * @return Movement signal
+	 */
+	private String computeMovementSignal() {
 		if(currentTaskParameter < 0) {
 			return "";
 		}
@@ -43,7 +92,23 @@ public class PremotorCortex extends BrainSchema {
 		}
 	}
 	
+	/**
+	 * Handles necessary inputs to produce
+	 * necessary outputs.
+	 */
 	public boolean produceOutput() {
+		
+		//reset case
+		if(resetSignals.size() > 0) {
+			resetSignals.clear();
+			pfcInput.clear();
+			pcInput.clear();
+			fmInput.clear();
+			currentTaskParameter = 0.0;
+			return false;
+		}
+
+		//receive task parameter from pfc if pfc sends something.
 		if(pfcInput.size() > 0) {
 			currentTaskParameter = pfcInput.remove().getTaskParameter();
 			return false;
@@ -79,6 +144,10 @@ public class PremotorCortex extends BrainSchema {
 		return false;
 	}
 	
+	/**
+	 * Sets up connection to forward models
+	 * @param forwardModels connections
+	 */
 	public void setForwardModels(List<ForwardModel> forwardModels) {
 		this.forwardModels = forwardModels;
 	}

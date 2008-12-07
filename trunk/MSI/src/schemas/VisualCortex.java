@@ -26,6 +26,9 @@ public class VisualCortex extends BrainSchema {
 	 */
 	private GUISchema guiSchema;	
 	
+	/**
+	 * Connection to parietal cortex
+	 */
 	private ParietalCortex  pc;
 	
 	/**
@@ -50,6 +53,12 @@ public class VisualCortex extends BrainSchema {
 	 * Produces output.
 	 */
 	public boolean produceOutput() {
+		if(resetSignals.size() > 0) {
+			resetSignals.clear();
+			visualInputStream.clear();
+			return false;
+		}
+		
 		if(visualInputStream.size() > 0) {
 //			this.printDebug("Sending tagged image to GUISchema");
 			VisualCortexOutput output = tagImage(visualInputStream.remove());
@@ -62,9 +71,7 @@ public class VisualCortex extends BrainSchema {
 			
 			return true;
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 	
 	/**
@@ -72,38 +79,6 @@ public class VisualCortex extends BrainSchema {
 	 * @param images The current screenshot (multiple copies of it)
 	 * @return output of visual cortex
 	 */
-/*	private VisualCortexOutput tagImage(java.util.List<BufferedImage> images)  {
-		BufferedImage img =  images.get(0);
-		BufferedImage img2 = images.get(1);
-		BufferedImage img3 = images.get(2);
-		BufferedImage i1 = createFilteredImage(img, 90, 190, 150, 255, 90, 190); //green
-		BufferedImage i2 = createFilteredImage(img2, 150, 255, 40, 80, 90, 120); //pink
-		BufferedImage i3 = createFilteredImage(img3, 70, 120, 60, 130, 50, 255); //blue
-		LargestBlob f1 = markLargest(i1, Color.green);
-		LargestBlob f2 = markLargest(i2, Color.red);
-		LargestBlob f3 = markLargest(i3, Color.blue);
-
-		i1 = f1.getImg();
-		i2 = f2.getImg();
-		i3 = f3.getImg();
-
-		//add marker for other colors
-		for(int x=0; x < i1.getWidth(); x++) {
-		  for(int y=0; y < i1.getHeight(); y++) {
-			  int pixel2 = i2.getRGB(x, y);
-			  int pixel3 = i3.getRGB(x, y);
-
-			  //marker condition
-			  if(pixelColorful(pixel2))
-				i1.setRGB(x, y, pixel2);
-			  if(pixelColorful(pixel3))
-			  	i1.setRGB(x,y,pixel3);
-		  }
-		}
-
-		return new VisualCortexOutput(f1, f2, f2, i1);
-	}*/
-
 	public VisualCortexOutput tagImage(java.util.List<BufferedImage> images)  {
 		BufferedImage img1 =  images.get(0);
 		BufferedImage img2 =  images.get(1);
@@ -111,10 +86,15 @@ public class VisualCortex extends BrainSchema {
 		BufferedImage img4 =  images.get(3);
 
 		int[][][] hsvImg = imgToHSV(img1);
-		BufferedImage i1 = createFilteredImage(img1, hsvImg, 50, 70, 3, 110, 0, 100000); //green
-		BufferedImage i2 = createFilteredImage(img2, hsvImg, -20, 30, 3, 20, 0, 100000); //red
-		BufferedImage i3 = createFilteredImage(img3, hsvImg, 20, 60, 5, 25, 0, 100000); //yellow
-		BufferedImage i4 = createFilteredImage(img4, hsvImg, 80, 140, 0, 10, 0, 100000); //blue
+		BufferedImage i1 = createFilteredImage(img1, hsvImg, 30, 50, 3, 110, 0, 100000); //green
+		BufferedImage i2 = createFilteredImage(img2, hsvImg, -25, 15, 20, 45, 0, 100000); //red
+		BufferedImage i3 = createFilteredImage(img3, hsvImg, 20, 40, 20, 45, 0, 100000); //yellow
+		BufferedImage i4 = createFilteredImage(img4, hsvImg, 50, 290, 0, 40, 0, 100000); //blue
+
+//		BufferedImage i1 = createFilteredImage(img1, hsvImg, 50, 70, 3, 110, 0, 100000); //green
+//		BufferedImage i2 = createFilteredImage(img2, hsvImg, -20, 30, 3, 20, 0, 100000); //red
+//		BufferedImage i3 = createFilteredImage(img3, hsvImg, 20, 60, 5, 25, 0, 100000); //yellow
+//		BufferedImage i4 = createFilteredImage(img4, hsvImg, 80, 140, 0, 10, 0, 100000); //blue
 
 //		BufferedImage i1 = createFilteredImage(img, 90, 190, 0, 255, 90, 190); //green
 //		BufferedImage i2 = createFilteredImage(img2, 150, 255, 40, 80, 90, 120); //pink
@@ -292,14 +272,29 @@ public class VisualCortex extends BrainSchema {
 		return !(red==255 && blue==255 && green==255);
 	}
 	
+	/**
+	 * Sets connection to gui schema
+	 * @param guiSchema connection
+	 */
 	public void setGUISchema(GUISchema guiSchema) {
 		this.guiSchema =  guiSchema;
 	}
 	
+	/**
+	 * Sets connection to parietal cortex
+	 * @param pc parietal cortex connection
+	 */
 	public void setParietalCortex(ParietalCortex pc) {
 		this.pc =  pc;
 	}
 	
+	/**
+	 * Helper method to convert from rgb to hsv space.
+	 * @param r Red value
+	 * @param g Green value
+	 * @param b Blue value
+	 * @return Color in HSV space
+	 */
 	private int[] rgb2hsv(int r, int g, int b) {
 		int min;    //Min. value of RGB
 		int max;    //Max. value of RGB
@@ -332,6 +327,11 @@ public class VisualCortex extends BrainSchema {
 		return hsv;
 	}
 	
+	/**
+	 * Converts an image with RGB pixel to an image in HSV
+	 * @param i The image
+	 * @return A 3-D array that pairs each (x,y) to an array[3] of hsv values
+	 */
 	public int[][][] imgToHSV(BufferedImage i) {
 		int[][][] rtn = new int[i.getHeight()][i.getWidth()][3];
 
@@ -353,6 +353,23 @@ public class VisualCortex extends BrainSchema {
 		return rtn;
 	}
 	
+	/**
+	 * Creates filtered image in hsv space instead of RGB space.
+	 * I experimented with both RGB and HSV filtering and stuck with HSV
+	 * because it had better performance. This uses the same
+	 * technique as the above RGB method in terms of filtering
+	 * pixels based on thresholds.
+	 * 
+	 * @param image The image
+	 * @param hsv The hsv image representation
+	 * @param hmin h minimum
+	 * @param hmax h maximum
+	 * @param smin s minimum
+	 * @param smax s maximum
+	 * @param vmin v minimum
+	 * @param vmax v maximum
+	 * @return
+	 */
 	public BufferedImage createFilteredImage(BufferedImage image, int[][][] hsv, int hmin, int hmax, int smin, int smax, int vmin, int vmax) {
 		for (int i = 0; i < image.getHeight(); i++) {
 		  for (int j = 0; j < image.getWidth(); j++) {

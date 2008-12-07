@@ -1,6 +1,12 @@
 package util;
-public class Vector2 {
 
+/**
+ * Models a 2-D vector
+ * @author Prateek Tandon
+ *
+ */
+public class Vector2 {
+	
 	private double x;
 	private double y;
 	private double vectorStartX;

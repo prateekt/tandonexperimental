@@ -12,7 +12,10 @@
 	
     <path id="project.path">
         <pathelement location="${build}"/>
-    	<pathelement location="${drivers/jmf.jar}"/>
+    	<pathelement location="${drivers}/jmf.jar"/>
+    	<pathelement location="${drivers}/jcommon-1.0.14.jar"/>
+    	<pathelement location="${drivers}/jfreechart-1.0.11.jar"/>
+
     </path>
 
     <!-- Print out a listing of the most important ant targets -->

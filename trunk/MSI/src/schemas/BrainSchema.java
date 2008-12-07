@@ -1,5 +1,9 @@
 package schemas;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Semaphore;
+import java.util.*;
+
+import schema_output.EstimatedMentalStateOutput;
 
 /**
  * This is the base class for brain schemas. To simulate the parallel processes
@@ -32,6 +36,7 @@ public abstract class BrainSchema {
 	 */
 	protected BrainSchema(String name) {
 		this.name = name;
+		resetSignals = new ConcurrentLinkedQueue<String>();
 	}
 
 	/**
@@ -55,6 +60,19 @@ public abstract class BrainSchema {
 		System.out.println(name + ": " + msg);
 	}
 	
+	/**
+	 * Queue of reset signals
+	 */
+	protected Queue<String> resetSignals;
+	
+	/**
+	 * Received reset signal
+	 */
+	public void sendReset(String resetSignal) {
+		resetSignals.add(resetSignal);
+		receivedInput();
+	}
+
 	/**
 	 * Starts the brain schema thread so it can start recieving input
 	 * and producing output.
@@ -88,7 +106,7 @@ public abstract class BrainSchema {
 		private SchemaThread(String name) {
 			super(name);
 		}
-
+		
 		public void run() {
 			running = true;
 
@@ -108,6 +126,9 @@ public abstract class BrainSchema {
 		}
 	}
 	
+	/**
+	 * @return name of the schema
+	 */
 	public String getName() {
 		return name;
 	}

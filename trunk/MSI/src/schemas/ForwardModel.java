@@ -5,6 +5,18 @@ import java.util.concurrent.*;
 import util.*;
 import gui.*;
 
+/**
+ * A forward model attempts to predict the consequences of executing
+ * an action. In this case, a forward model serves as a hypothesis
+ * for a particular mental state. At each time step, the forward
+ * model tries to predict the control variables for a particular hypothesis.
+ * These simulated control variables are compared with observed control
+ * variables to infer whether the hypothesis proposed by the forward
+ * model is likely or not. The forward model with the highest 
+ * probability is the inferred mental state.
+ * @author Prateek Tandon
+ *
+ */
 public abstract class ForwardModel extends BrainSchema {
 	
 	/**
@@ -63,16 +75,31 @@ public abstract class ForwardModel extends BrainSchema {
 		numTimeSteps = Constants.NUMBER_TIME_STEPS;
 	}
 	
+	/**
+	 * Used by forward model to send last control variable
+	 * summary to itself. It's a recurrent structure.
+	 * @param input The input from last time step.
+	 */
 	public void sendFMInput(ControlVariableSummary input) {
 		fmInput.add(input);
 		receivedInput();
 	}
 	
+	/**
+	 * Used by premotor cortex to send input to the forward model.
+	 * @param input The input from the forward model
+	 */
 	public void sendPCInput(PremotorCortexOutput input) {
 		pcInput.add(input);
 		receivedInput();
 	}
 	
+	/**
+	 * Helper method to produce output.
+	 * @param cv The control variable 
+	 * @param motorCommand The motor command
+	 * @return My output
+	 */
 	public ControlVariableSummary getOutput(ControlVariableSummary cv, String motorCommand) {
 		if(motorCommand.equalsIgnoreCase("straight")) {
 			//use straight line prediction
@@ -96,7 +123,18 @@ public abstract class ForwardModel extends BrainSchema {
 		return null; //error case
 	}
 		
+	/**
+	 * Produces necessary output based on received inputs
+	 */
 	public boolean produceOutput() {
+		//reset case
+		if(resetSignals.size() > 0) {
+			resetSignals.clear();
+			currentTimeStep = 0;
+			fmInput.clear();
+			pcInput.clear();
+			return false;
+		}
 		
 		//do stuff only if pc has sent stuff
 		if(pcInput.size() > 0) {
@@ -145,10 +183,18 @@ public abstract class ForwardModel extends BrainSchema {
 		return false;
 	}
 	
+	/**
+	 * Sets connection to premotor cortex
+	 * @param pc
+	 */
 	public void setPremotorCortex(PremotorCortex pc) {
 		this.pc = pc;
 	}
 	
+	/**
+	 * Sets connection to difference module
+	 * @param dm
+	 */
 	public void setDifferenceModule(DifferenceModule dm) {
 		this.dm = dm;
 	}
