@@ -1,12 +1,32 @@
 package schema_output;
 import schemas.*;
 
+/**
+ * A pair of the forward model name and its 
+ * designated discounted difference (for
+ * a given time step). Used by difference module.
+ * @author Prateek Tandon
+ *
+ */
 public class FMDDPair {
 	
-	private ForwardModel forwardModel;
+	/**
+	 * The forward model name
+	 */
+	private String forwardModel;
+
+	/**
+	 * The discounted difference associated with the
+	 * forward model
+	 */
 	private double discountedDifference;
 	
-	public FMDDPair(ForwardModel forwardModel, double discountedDifference) {
+	/**
+	 * Constructor
+	 * @param forwardModel The forward model name
+	 * @param discountedDifference The discoutned difference for the forward model
+	 */
+	public FMDDPair(String forwardModel, double discountedDifference) {
 		this.forwardModel = forwardModel;
 		this.discountedDifference = discountedDifference;
 	}
@@ -14,14 +34,14 @@ public class FMDDPair {
 	/**
 	 * @return the forwardModel
 	 */
-	public ForwardModel getForwardModel() {
+	public String getForwardModel() {
 		return forwardModel;
 	}
 
 	/**
 	 * @param forwardModel the forwardModel to set
 	 */
-	public void setForwardModel(ForwardModel forwardModel) {
+	public void setForwardModel(String forwardModel) {
 		this.forwardModel = forwardModel;
 	}
 

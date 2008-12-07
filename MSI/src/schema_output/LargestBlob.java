@@ -1,9 +1,27 @@
 package schema_output;
 import java.awt.image.*;
 
+/**
+ * Largest blob struct. Used by Visual cortex
+ * in storing color segmentation results.
+ * @author Prateek Tandon
+ *
+ */
 public class LargestBlob {
+	
+	/**
+	 * The color segmented image
+	 */
 	private BufferedImage img;
+
+	/**
+	 * The x coordinate of the largest blob of a given color.
+	 */
 	private double cX;
+	
+	/**
+	 * The y coordinate of the largest blob of a given color.
+	 */
 	private double cY;
 	
 	/**

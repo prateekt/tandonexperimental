@@ -1,16 +1,41 @@
 package schema_output;
 
+/**
+ * The premotor cortex output struct
+ * @author Prateek Tandon
+ *
+ */
 public class PremotorCortexOutput {
 	
+	/**
+	 * The distance from the center initially
+	 */
 	private double distanceFromCenterInit = -1;
+
+	/**
+	 * The angular orientation initially
+	 */
 	private double orientationAngleDifferenceInit = -1;
+
+	/**
+	 * The motor command to execute
+	 */
 	private String motorCommand = null;
 	
+	/**
+	 * Constructor
+	 * @param distanceFromCenterInit
+	 * @param orientationAngleDifferenceInit
+	 */
 	public PremotorCortexOutput(double distanceFromCenterInit, double orientationAngleDifferenceInit) {
 		this.distanceFromCenterInit = distanceFromCenterInit;
 		this.orientationAngleDifferenceInit = orientationAngleDifferenceInit;
 	}
 	
+	/**
+	 * Constructor
+	 * @param motorCommand
+	 */
 	public PremotorCortexOutput(String motorCommand) {
 		this.motorCommand = motorCommand;
 	}

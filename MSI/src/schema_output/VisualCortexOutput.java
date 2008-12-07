@@ -2,13 +2,46 @@ package schema_output;
 
 import java.awt.image.*;
 
+/**
+ * Visual cortex output struct
+ * @author Prateek Tandon
+ *
+ */
 public class VisualCortexOutput {
+	
+	/**
+	 * The tagged largest green object in the scene.
+	 */
 	private LargestBlob greenTag;
+	
+	/**
+	 * The tagged largest pink object in the scene.
+	 */
 	private LargestBlob pinkTag;
+
+	/**
+	 * The tagged largest blue object in the scene.
+	 */
 	private LargestBlob blueTag;
+	
+	/**
+	 * The tagged largest yellow object in the scene.
+	 */
 	private LargestBlob yellowTag;
+	
+	/**
+	 * The tagged image with all the blobs segmented.
+	 */
 	private BufferedImage taggedImage;
 	
+	/**
+	 * Constructor
+	 * @param blueTag
+	 * @param greenTag
+	 * @param pinkTag
+	 * @param yellowTag
+	 * @param taggedImage
+	 */
 	public VisualCortexOutput(LargestBlob blueTag, LargestBlob greenTag, LargestBlob pinkTag, LargestBlob yellowTag, BufferedImage taggedImage) {
 		this.greenTag = greenTag;
 		this.pinkTag =  pinkTag;
