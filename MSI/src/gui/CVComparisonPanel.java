@@ -38,4 +38,10 @@ public class CVComparisonPanel extends TriGraphPanel {
 		obsSeries.add(t,val);
 		repaint();
 	}
+	
+	public void reset() {
+		super.reset();
+		obsSeries = new XYSeries("Observed " + series);
+		allSeries.addSeries(obsSeries);
+	}
 }

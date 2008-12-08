@@ -53,6 +53,8 @@ public class GUI extends JFrame {
 	 * @param cam The camera being used (either mock or real)
 	 */
 	public GUI(WebCam cam) {
+		super("Mental State Inference (Prateek Tandon)");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
 		taggedImagePanel = new TaggedImagePanel(this);
 		ddPanel = new TriGraphPanel(this, "Discounted Difference");
@@ -61,25 +63,50 @@ public class GUI extends JFrame {
 		oaPanel = new CVComparisonPanel(this, "Angular Orientation Difference");
 //		add(cam.getCameraFeed(), BorderLayout.NORTH);
 //		add(taggedImagePanel, BorderLayout.SOUTH);
-		probPanel.setBounds(0,0,300,300);
-		getContentPane().add(taggedImagePanel);
-		getContentPane().add(ddPanel);
-		ddPanel.setBounds(0,300,300,300);
-		getContentPane().add(cam.getCameraFeed());
-		cam.getCameraFeed().setBounds(300,0,300,300);
-		getContentPane().add(probPanel);
-		taggedImagePanel.setBounds(300,300,300,300);
-		getContentPane().add(oaPanel);
-		oaPanel.setBounds(600,0,300,300);
-		getContentPane().add(docPanel);
-		docPanel.setBounds(600,300,300,300);		
+
+		//MS Panel
+		JPanel msPanel = new JPanel();
+		msPanel.setLayout(null);
+		msPanel.add(probPanel);
+		msPanel.add(ddPanel);
+		probPanel.setBounds(0,300,300,300);
+		ddPanel.setBounds(0,0,300,300);
+
+		//CV Panel
+		JPanel cvPanel = new JPanel();
+		cvPanel.setLayout(null);
+		cvPanel.add(oaPanel);
+		cvPanel.add(docPanel);
+		oaPanel.setBounds(0,0,300,300);
+		docPanel.setBounds(0,300,300,300);		
+		
+		JTabbedPane tabbedPane = new JTabbedPane();
+		tabbedPane.addTab("Belief Inference", msPanel);
+		tabbedPane.addTab("Control Variables", cvPanel);
+		
+		add(tabbedPane);
+		tabbedPane.setBounds(10,10,300,630);
+		
+		JPanel tvPanel = new JPanel();
+		tvPanel.setLayout(null);
+		tvPanel.add(cam.getCameraFeed());
+		cam.getCameraFeed().setBounds(0,0,300,300);
+		tvPanel.add(taggedImagePanel);
+		taggedImagePanel.setBounds(0,300,300,300);
+		
+		JTabbedPane tvTabbedPane = new JTabbedPane();
+		tvTabbedPane.addTab("Video Input", tvPanel);
+		
+		add(tvTabbedPane);
+		tvTabbedPane.setBounds(325,10,300,630);
 		
 		buttonPanel = new ButtonPanel(this);
 		getContentPane().add(buttonPanel);
-		buttonPanel.setBounds(0, 610, 300, 300);
+		buttonPanel.setBounds(50, 645, 600, 100);
 		
 		this.pack();
-		this.setSize(new Dimension(910,610));
+		this.setSize(new Dimension(645,715));
+		this.setResizable(false);
 		this.setVisible(true);		
 	}
 	
@@ -176,6 +203,13 @@ public class GUI extends JFrame {
 	 */
 	public CVComparisonPanel getOAPanel() {
 		return oaPanel;
+	}
+	
+	/**
+	 * Returns Button Panel
+	 */
+	public ButtonPanel getButtonPanel() {
+		return buttonPanel;
 	}
 }
 

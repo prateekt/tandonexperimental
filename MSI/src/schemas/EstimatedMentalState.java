@@ -3,6 +3,7 @@ import java.util.*;
 import java.util.concurrent.*;
 import schema_output.*;
 import gui.*;
+import game.*;
 
 /**
  * The estimated mental state schema takes in the discounted difference
@@ -25,6 +26,12 @@ public class EstimatedMentalState extends BrainSchema {
 	private Queue<DifferenceModuleOutput> dmInput;
 	
 	/**
+	 * Received inputs from story master 
+	 * (for game prototype)
+	 */
+	private Queue<GameOutput> gameInput;
+	
+	/**
 	 * Connection to gui schema
 	 */
 	private GUISchema gm;
@@ -36,6 +43,7 @@ public class EstimatedMentalState extends BrainSchema {
 		super("Estimated Mental State");		
 		fmToDD = Collections.synchronizedMap(new HashMap<String, Double>());
 		dmInput = new ConcurrentLinkedQueue<DifferenceModuleOutput>();
+		gameInput = new ConcurrentLinkedQueue<GameOutput>();
 	}
 	
 	/**
@@ -44,6 +52,15 @@ public class EstimatedMentalState extends BrainSchema {
 	 */
 	public void sendDMOutput(DifferenceModuleOutput input) {
 		dmInput.add(input);
+		receivedInput();
+	}
+	
+	/**
+	 * Used by story master schema in game prototype to communicate
+	 * with this schema
+	 */
+	public void sendGameInput(GameOutput gm) {
+		gameInput.add(gm);
 		receivedInput();
 	}
 	
@@ -91,14 +108,37 @@ public class EstimatedMentalState extends BrainSchema {
 				double prob =  computeProbability(totalSum, p.getDiscountedDifference());
 				fmToProb.put(p.getForwardModel(),prob);
 			}
-			
-			EstimatedMentalStateOutput output = new EstimatedMentalStateOutput(winner, fmToProb, dmIn.getTimeStep());
-			
+						
 			//send to prefrontal cortex and gui!
-			this.printDebug("WINNER: " + output.toString());
 			
 			//send to gui
-			gm.sendEMInput(output);
+			EstimatedMentalStateOutput output1 = new EstimatedMentalStateOutput(winner, fmToProb, dmIn.getTimeStep());
+			this.printDebug("WINNER: " + output1.toString());
+			gm.sendEMInput(output1);
+			
+			//send to story manager if
+			//reached end of simulation
+			if(gameInput.size() > 0) {
+				GameOutput gm = gameInput.peek();
+				StoryMaster sm = gm.getSm();
+				
+				String msiAction = gm.getMsiAction();
+				if(msiAction.equalsIgnoreCase("Nailing") && output1.getTimeStep() >=35) {
+					EstimatedMentalStateOutput output2 = new EstimatedMentalStateOutput(winner, fmToProb, dmIn.getTimeStep());
+					sm.sendEMInput(output2);
+					gameInput.remove();
+				}
+				if(msiAction.equalsIgnoreCase("Prying") && output1.getTimeStep() >= 30) {
+					EstimatedMentalStateOutput output2 = new EstimatedMentalStateOutput(winner, fmToProb, dmIn.getTimeStep());
+					sm.sendEMInput(output2);
+					gameInput.remove();
+				}
+				if(msiAction.equalsIgnoreCase("Holding") && output1.getTimeStep() >= 20) {
+					EstimatedMentalStateOutput output2 = new EstimatedMentalStateOutput(winner, fmToProb, dmIn.getTimeStep());
+					sm.sendEMInput(output2);
+					gameInput.remove();
+				}
+			}
 			
 			return true;			
 		}

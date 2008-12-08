@@ -19,7 +19,7 @@ public abstract class WebCam extends BrainSchema {
 	/**
 	 * Whether wecam is active or not.
 	 */
-	private boolean on = false;
+	private boolean on = true;
 	
 	/**
 	 * The visual cortex connection.
@@ -37,11 +37,17 @@ public abstract class WebCam extends BrainSchema {
 	 * Sends images to visual cortex based on the clock constant.
 	 */
 	public boolean produceOutput() {
-		
 		//reset case
 		if(resetSignals.size()> 0) {
 			resetSignals.clear();
-			on = false;
+//			on = false;
+			try {
+				Thread.sleep(2000);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			reset();
 		}
 		
 		//produce image
@@ -67,6 +73,11 @@ public abstract class WebCam extends BrainSchema {
 	public void setVisualCortex(VisualCortex vc) {
 		this.vc = vc;
 	}
+	
+	/**
+	 * Reset function for particular web cam.
+	 */
+	protected abstract void reset();
 	
 	/**
 	 * Returns a panel for the gui showing the camera output.

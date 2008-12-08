@@ -41,7 +41,7 @@ public class RealWebCam extends WebCam {
 	 * The current time step.
 	 */
 	int t=0;
-		
+	
 	/**
 	 * Constructor
 	 */
@@ -62,6 +62,13 @@ public class RealWebCam extends WebCam {
 		}
 	}
 	
+	/**
+	 * Reset Implementation
+	 */
+	protected void reset() {
+		t=0;
+	}
+
 	/**
 	 * Returns a JPanel with the camera feed.
 	 */

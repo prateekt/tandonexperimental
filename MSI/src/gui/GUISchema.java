@@ -105,6 +105,10 @@ public class GUISchema extends BrainSchema {
 			dmInput.clear();
 			emInput.clear();
 			dmVarInput.clear();
+			gui.getDDPanel().reset();
+			gui.getProbPanel().reset();
+			gui.getDOCPanel().reset();
+			gui.getOAPanel().reset();
 		}
 		
 		if(visInput.size() > 0) {
@@ -140,6 +144,8 @@ public class GUISchema extends BrainSchema {
 					gui.getProbPanel().addPryingSeriesPoint(input.getTimeStep(), fmToProb.get(fm));
 				}
 			}
+			
+			gui.getButtonPanel().setInferredState(input.getEstimatedMentalState());			
 		}
 		if(dmVarInput.size() > 0) {
 			ControlVariablesUpdate input = dmVarInput.remove();

@@ -1,0 +1,4 @@
+You find yourself on a beach.  You're not quite sure how you got there. Dazed and confused, you stagger over the washed up shore. After walking for a while, a voice calls you from the rocks. You notice that behind the rocks is a band of pirates. They rush out and surround you. You hear a thud on the ground. You're trusty sword has fallen to the ground. You start reaching for it. Show how you would pick it up. Illustrate what you do with your sword.
+Pick it up for fighting, Pick up to throw onto ground, Put in your shirt
+nailing, prying, holding
+scene2.txt, scene3.txt, scene4.txt 

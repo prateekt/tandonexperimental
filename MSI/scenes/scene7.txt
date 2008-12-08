@@ -1,0 +1,4 @@
+The right cup you chucked hits the guard in the face. The other pirates run out in fear (???). You find yourself in the room alone. You notice a broom stick in the corner. You know that the pirates may return. What do you do?
+Pick up the broom stick, Dust the floor, Put in your shirt
+nailing, prying, holding
+scene8.txt, scene9.txt, scene10.txt 
