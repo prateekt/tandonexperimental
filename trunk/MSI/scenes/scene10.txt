@@ -1,0 +1,4 @@
+The broom stick does not fit in your shirt. Try another action.
+Pick up the broom stick, Dust the floor, Put in your shirt
+nailing, prying, holding
+scene8.txt, scene9.txt, scene10.txt

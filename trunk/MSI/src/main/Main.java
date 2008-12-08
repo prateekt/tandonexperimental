@@ -1,28 +1,22 @@
 package main;
 import webcam.*;
+import game.*;
 import schemas.*;
 import gui.*;
 import schema_output.*;
 import java.util.*;
 import util.*;
-import org.jfree.data.xy.*;
-import org.jfree.chart.*;
-import org.jfree.chart.util.*;
-import org.jfree.chart.plot.PlotOrientation;
-import java.io.*;
 
 public class Main {
 
 	public static void main(String[] args) {
 		
-		//Brain Schemas declared
-		WebCam webcam = new MockWebCam("trials/prying/");
-		Constants.getBrainSchemas().add(webcam);
+		//Brain Schemas declared and MSI init
+		WebCam webcam = new MockWebCam("trials/trial2/");
+		webcam.setOn(false);
 //		RealWebCam webcam = new RealWebCam();
 //		webcam.setRecord(true);
 //		webcam.setRecordDirectory("trials/trial9/");
-		GUI gui = new GUI(webcam);
-		GUISchema guiSchema = new GUISchema(gui);
 		VisualCortex vc = new VisualCortex();
 		PrefrontalCortex pfc =  new PrefrontalCortex();
 		PremotorCortex premotor = new PremotorCortex();
@@ -30,8 +24,14 @@ public class Main {
 		List<ForwardModel> forwardModels = Constants.getForwardModels();
 		DifferenceModule dm = new DifferenceModule();
 		EstimatedMentalState em = new EstimatedMentalState();
+		GUI gui = new GUI(webcam);
+		GUISchema guiSchema = new GUISchema(gui);
+		
+		//init Game
+		StoryMaster sm = new StoryMaster("scenes", gui);
 		
 		//Add to global schemas list
+		Constants.getBrainSchemas().add(webcam);
 		Constants.getBrainSchemas().add(guiSchema);
 		Constants.getBrainSchemas().add(vc);
 		Constants.getBrainSchemas().add(pfc);
@@ -57,6 +57,7 @@ public class Main {
 		dm.setEstimatedMentalState(em);
 		dm.setGuiSchema(guiSchema);
 		em.setGUISchema(guiSchema);
+		sm.setEstimatedMentalState(em);
 		
 		//start threads
 		webcam.startThread();
@@ -70,6 +71,7 @@ public class Main {
 		}
 		dm.startThread();
 		em.startThread();
+		sm.startThread();
 
 		//send initial impulse for task parameter distribution
 /*		try {
@@ -78,6 +80,6 @@ public class Main {
 		}
 		catch(Exception e) {
 			e.printStackTrace();
-		}*/		
+		}*/
 	}
 }

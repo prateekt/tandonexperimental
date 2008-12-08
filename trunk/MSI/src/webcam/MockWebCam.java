@@ -46,6 +46,13 @@ public class MockWebCam extends WebCam {
 	}
 	
 	/**
+	 * Reset Implementation
+	 */
+	protected void reset() {
+		t =0;
+	}
+	
+	/**
 	 * Used to grab frames from the camera.
 	 */
 	public java.util.List<BufferedImage> grabFrame(int numCopies) {
@@ -62,7 +69,7 @@ public class MockWebCam extends WebCam {
 				BufferedImage update = ImageIO.read(new File(imgDir + "shot" + t +".jpg"));
 				panel.setCurrent(update);
 				panel.repaint();
-				this.printDebug(""+t);
+//				this.printDebug(""+t);
 				t++;
 			}
 		}

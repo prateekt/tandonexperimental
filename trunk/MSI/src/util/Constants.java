@@ -82,22 +82,24 @@ public class Constants {
 		//find key schemas
 		PrefrontalCortex pfc = null;
 		WebCam webcam = null;
+		ParietalCortex pc = null;
 		for(BrainSchema b : getBrainSchemas()) {
 			if(b instanceof PrefrontalCortex)
 				pfc = (PrefrontalCortex) b;
 			if(b instanceof WebCam)
 				webcam = (WebCam) b;
+			if(b instanceof ParietalCortex)
+				pc = (ParietalCortex) b;
 		}
 		
 		if(pfc!=null && webcam!=null) {
 		
-			//tell webcam to go
+			//tell webcam to go off
 			webcam.setOn(true);
 			
 			//send pfc init signal
-			pfc.sendInput(new EstimatedMentalStateOutput(null,null,-1));
-		}
-		
+			pfc.sendInput(new EstimatedMentalStateOutput(null,null,-1));			
+		}		
 	}
 	
 	public static WebCam getWebCam() {

@@ -2,6 +2,7 @@ package schemas;
 import java.util.*;
 import schema_output.*;
 import java.util.concurrent.*;
+import util.*;
 
 /**
  * The premotor cortex computes movement signals based
@@ -57,7 +58,6 @@ public class PremotorCortex extends BrainSchema {
 	 * @param input The input from parietal cortex
 	 */
 	public void sendPCInput(ParietalCortexOutput input) {
-		this.printDebug("Received parietal input");
 		pcInput.add(input);
 		receivedInput();
 	}
@@ -97,14 +97,13 @@ public class PremotorCortex extends BrainSchema {
 	 * necessary outputs.
 	 */
 	public boolean produceOutput() {
-		
+				
 		//reset case
 		if(resetSignals.size() > 0) {
 			resetSignals.clear();
 			pfcInput.clear();
 			pcInput.clear();
 			fmInput.clear();
-			currentTaskParameter = 0.0;
 			return false;
 		}
 
@@ -126,7 +125,7 @@ public class PremotorCortex extends BrainSchema {
 				for(ForwardModel fm : forwardModels) {
 					fm.sendPCInput(output_initSignal);
 				}
-				
+								
 				return true;
 			}
 		

@@ -78,7 +78,6 @@ public class ParietalCortex extends BrainSchema {
 			resetSignals.clear();
 			vcInput.clear();
 			pfcInput.clear();
-			taskParameter = -1;
 			sentInitToPC = false;
 			return false;
 		}
@@ -96,6 +95,7 @@ public class ParietalCortex extends BrainSchema {
 		//have task for doing so.
 		if(taskParameter > 0) {
 			if(vcInput.size() > 0) {
+
 				ParietalCortexOutput output = getOutput(vcInput.remove());
 				if(output==null) {
 					this.printDebug("FALSE OUTPUT");

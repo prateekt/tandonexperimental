@@ -6,7 +6,8 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
-
+import org.jfree.chart.ChartUtilities;
+import java.io.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -52,7 +53,7 @@ public class TriGraphPanel extends JPanel {
 	/**
 	 * The title of the graph.
 	 */
-	private String series;
+	protected String series;
 	
 	/**
 	 * Constructor
@@ -99,7 +100,13 @@ public class TriGraphPanel extends JPanel {
 		     true,
 		     true 
         );
-		
+
+        try {
+            ChartUtilities.saveChartAsJPEG(new File(series+".jpg"), chart, 300,
+                300);
+        } catch (Exception e) {
+            System.out.println("Problem occurred creating chart.");
+        }
 		return chart.createBufferedImage(300, 300);
     }
     
@@ -131,5 +138,14 @@ public class TriGraphPanel extends JPanel {
     public void addPryingSeriesPoint(double t, double val)  {
     	pryingSeries.add(t, val);
     	repaint();
+    }
+    
+    public void reset() {
+    	holdingSeries = new XYSeries("Holding Prediction: " + series);
+    	nailingSeries = new XYSeries("Nailing Prediction: " + series);
+    	pryingSeries = new XYSeries("Prying Prediction: " + series);
+		allSeries = new XYSeriesCollection(holdingSeries);
+		allSeries.addSeries(nailingSeries);
+		allSeries.addSeries(pryingSeries);
     }
 }

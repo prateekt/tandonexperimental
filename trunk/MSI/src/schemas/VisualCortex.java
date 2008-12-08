@@ -14,6 +14,8 @@ import gui.*;
  * @author Prateek Tandon
  */
 public class VisualCortex extends BrainSchema {
+
+	int t =0;
 	
 	/**
 	 * The visual input stream from the webcam. Listing of snapshots
@@ -63,12 +65,21 @@ public class VisualCortex extends BrainSchema {
 //			this.printDebug("Sending tagged image to GUISchema");
 			VisualCortexOutput output = tagImage(visualInputStream.remove());
 			
+/*			StringBuffer rtn = new StringBuffer();
+			rtn.append(t  + ",");
+			rtn.append(output.getBlueTag().getCX() + "," + output.getBlueTag().getCY() + ",");
+			rtn.append(output.getGreenTag().getCX() + "," + output.getGreenTag().getCY() + ",");
+			rtn.append(output.getPinkTag().getCX() + "," + output.getPinkTag().getCY() + ",");
+			rtn.append(output.getYellowTag().getCX() + "," + output.getYellowTag().getCY());
+
+			System.out.println(rtn.toString());*/
+			
 			//send output to GUI
 			guiSchema.sendVisInput(output);
 
 			//send output to parietal cortex
 			pc.sendVisualInput(output);
-			
+			t++;
 			return true;
 		}
 		return false;
