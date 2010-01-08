@@ -3,21 +3,21 @@ import java.awt.*;
 public class Nail {
 	
 	//constants
-	private static final Vector2 nailStart = new Vector2(200,200);
-	private double r1;
-	private double r2;
-	private double length;
-	private double nailMass;
-	private double maxNormalForce = 50;
-	private double frictionCoeff = 0.5;
+	protected static final Vector2 nailStart = new Vector2(200,200);
+	protected double r1;
+	protected double r2;
+	protected double length;
+	protected double nailMass;
+	protected double maxNormalForce = 50;
+	protected double frictionCoeff = 0.5;
 	
 	//state variables
-	Vector2 nailHeadStart;
-	double amountIntoBoard;
-	double amountBent;
+	protected Vector2 nailHeadStart;
+	protected double amountIntoBoard;
+	protected double amountBent;
 	
 	//old vars
-	Vector2 oldNailHeadStart;
+	protected Vector2 oldNailHeadStart;
 	
 	public Nail(double r1, double r2, double length, double nailMass) {
 		this.r1 = r1;
