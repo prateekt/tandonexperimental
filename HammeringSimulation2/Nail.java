@@ -72,7 +72,6 @@ public class Nail {
 		}
 		else {
 			System.out.println("HIT: " + " " + impactForce + " " + getFrictionForce() + " STATIC FRICTION FAIL");
-			
 		}
 	}
 	

@@ -3,7 +3,6 @@ import java.awt.*;
 
 /**
  * @author Prateek Tandon
- *
  */
 public class View extends JFrame {
 
@@ -31,16 +30,16 @@ public class View extends JFrame {
 		HammeringArm h = new HammeringArm(100,100,20,20);
 		View v = new View(n,h);
 		
-/*		while(true) {
+		while(true) {
 			try {
 				Thread.sleep(1000);
-				n.hit(20, 1);
+//				n.hit(20, 1);
 				v.repaint();
 			}
 			catch(Exception e) {
 				e.printStackTrace();
 			
 			}
-		}*/
+		}
 	}
 }
