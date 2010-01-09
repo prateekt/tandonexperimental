@@ -29,17 +29,20 @@ public class View extends JFrame {
 		Nail n = new Nail(20,20,40,5);
 		HammeringArm h = new HammeringArm(100,100,20,20);
 		View v = new View(n,h);
+		h.setView(v);
+		h.setNail(n);
+		h.executeSwing(80, 1);
 		
-		while(true) {
+/*		while(true) {
 			try {
 				Thread.sleep(1000);
-//				n.hit(20, 1);
+				//n.hit(20, 1);
 				v.repaint();
 			}
 			catch(Exception e) {
 				e.printStackTrace();
 			
 			}
-		}
+		}*/
 	}
 }
