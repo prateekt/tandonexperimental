@@ -3,7 +3,8 @@ import java.awt.*;
 public class Nail {
 	
 	//constants
-	protected static final Vector2 nailStart = new Vector2(200,200);
+	protected static final Vector2 nailStart = new Vector2(50,200);
+
 	protected double r1;
 	protected double r2;
 	protected double length;
@@ -54,6 +55,10 @@ public class Nail {
 		g.drawRect((int) rectStartX, (int) rectStartY, (int) r2, (int) length);
 	}
 	
+	public Rectangle getNailBoundingRect() {
+		return new Rectangle((int)nailHeadStart.getX(), (int)nailHeadStart.getY(), (int)r1*2,(int)r1);
+	}
+	
 	public void hit(double impactForce, double time) {
 		double netForce = impactForce - getFrictionForce();
 		
@@ -82,4 +87,14 @@ public class Nail {
 	public double getNormalForce(double x) {
 		return maxNormalForce * (x/length);
 	}
+
+	public double getNailMass() {
+		return nailMass;
+	}
+
+	public void setNailMass(double nailMass) {
+		this.nailMass = nailMass;
+	}
+	
+	
 }
