@@ -28,21 +28,25 @@ public class View extends JFrame {
 	
 	private VisualizationScreen visScreen;
 	private GraphScreen graphScreen;
+	private BendScreen bendScreen;
 	
 	public View(Nail nail, HammeringArm arm) {
 		this.nail = nail;
 		this.arm = arm;
 		visScreen = new VisualizationScreen(nail, arm);
 		graphScreen = new GraphScreen(this, "Z");
+		bendScreen = new BendScreen(nail,arm);
+		
 		getContentPane().setBackground(Color.WHITE);
 		setLayout(null);
+		getContentPane().add(bendScreen);
 		getContentPane().add(visScreen);
 		getContentPane().add(graphScreen);
 		
 		visScreen.setBounds(0,0,300,300);
 		graphScreen.setBounds(300,0,300,300);
-	
-		setSize(610,350);
+		bendScreen.setBounds(600,0,300,300);
+		setSize(910,350);
 		setVisible(true);
 	}
 

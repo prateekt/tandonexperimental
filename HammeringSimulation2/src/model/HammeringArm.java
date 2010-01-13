@@ -39,7 +39,6 @@ public class HammeringArm {
 		oldTheta = theta;
 		theta = 90;
 		angularVel = 0;
-		System.out.println(oldTheta);
 		if(view!=null) {
 			view.repaint();
 		}
@@ -81,7 +80,7 @@ public class HammeringArm {
 		g.drawOval(x - radius, y - radius, radius*2, radius*2);
 	}
 	
-	public boolean executeSwing(double swingTheta, double angularAccel) {
+	public VisualResult executeSwing(double swingTheta, double angularAccel) {
 		oldTheta = theta;
 		theta = swingTheta;
 		if(view!=null) {
@@ -89,7 +88,7 @@ public class HammeringArm {
 		}
 		
 		int t=1;
-		double noiseEncountered = 0;
+		double zNoise = 0;
 		while(theta >= 0) {
 			
 			//update thetas
@@ -107,14 +106,12 @@ public class HammeringArm {
 			}
 		
 			//update cum noise
-			noiseEncountered+=noise;			
+			zNoise+=noise;			
 	
-			System.out.println(noise + " " + noiseEncountered);
-
 			//update view
 			if(view!=null) {
 				view.getGraphScreen().addInstNoiseSeriesPoint(t, noise);
-				view.getGraphScreen().addCumNoiseSeriesPoint(t, noiseEncountered);
+				view.getGraphScreen().addCumNoiseSeriesPoint(t, zNoise);
 			}
 			
 			//update t
@@ -124,7 +121,7 @@ public class HammeringArm {
 			try {
 				if(view!=null)
 					view.repaint();
-				Thread.sleep(1000);
+//				Thread.sleep(1000);
 			}
 			catch(Exception e) {
 				e.printStackTrace();
@@ -136,24 +133,26 @@ public class HammeringArm {
 				Rectangle nailBound = nail.getNailBoundingRect();
 
 				if(sprite_collide(hammerBound.getX(), hammerBound.getY(), hammerBound.getWidth(), hammerBound.getHeight(), nailBound.getX(), nailBound.getY(), nailBound.getWidth(), nailBound.getHeight())) {
-					System.out.println("Collision occured.");
+//					System.out.println("Collision occured.");
 					
 					//compute impact force
-					double newVel = (2*hammerMass)/(hammerMass + nail.getNailMass());
+					double linearVelocity = angularVel * l2_length;
+					double newVel = (2*hammerMass)/(hammerMass + nail.getNailMass()) * linearVelocity;
 					double changeInMomentum = nail.getNailMass()*newVel;
-					double impactForce = changeInMomentum / simulationTimeStep;
+					double impactForce = changeInMomentum / (simulationTimeStep*100);
 					
-					nail.hit(impactForce, simulationTimeStep);
+					nail.hit(impactForce, zNoise, simulationTimeStep);
 					reset();
-					return true;
+					VisualResult rtn = new VisualResult(true, nail.nailBent(), nail.nailIn(), nail.getAmountIntoBoard(), nail.getAmountBent(), nail.getLastAmountIntoBoardUpdate(), nail.getLastAmountBentUpdate());
+					return rtn;
 				}
 			}
-
 		}
 		
-		System.out.println("No Collision occured.");
+//		System.out.println("No Collision occured.");
 		reset();
-		return false;
+		VisualResult rtn = new VisualResult(false, nail.nailBent(), nail.nailIn(), nail.getAmountIntoBoard(), nail.getAmountBent(), 0, 0);
+		return rtn;
 	}
 	
 	// Object-to-object bounding-box collision detector:
@@ -191,11 +190,92 @@ public class HammeringArm {
 	
 	public double getVelocityDependentNoise(double vel) {
 		double randomNumber = Math.random();
-		return computeGaussian(randomNumber, 0, Math.sqrt(vel));
+		double rtn = computeGaussian(randomNumber, 0, Math.sqrt(vel));
+		return rtn;
 	}
 	
 	public double computeGaussian(double x, double mean, double stddev) {
 		double expTerm = -1*Math.pow(x-mean, 2) / (2*stddev*stddev);
 		return 1/(stddev*Math.sqrt(2*Math.PI)) * Math.exp(expTerm);
+	}
+
+	public double getL1_length() {
+		return l1_length;
+	}
+
+	public void setL1_length(double l1_length) {
+		this.l1_length = l1_length;
+	}
+
+	public double getL2_length() {
+		return l2_length;
+	}
+
+	public void setL2_length(double l2_length) {
+		this.l2_length = l2_length;
+	}
+
+	public Vector2 getL1_START() {
+		return L1_START;
+	}
+
+	public void setL1_START(Vector2 l1_start) {
+		L1_START = l1_start;
+	}
+
+	public double getHammerMass() {
+		return hammerMass;
+	}
+
+	public void setHammerMass(double hammerMass) {
+		this.hammerMass = hammerMass;
+	}
+
+	public double getHammerRadius() {
+		return hammerRadius;
+	}
+
+	public void setHammerRadius(double hammerRadius) {
+		this.hammerRadius = hammerRadius;
+	}
+
+	public double getSimulationTimeStep() {
+		return simulationTimeStep;
+	}
+
+	public void setSimulationTimeStep(double simulationTimeStep) {
+		this.simulationTimeStep = simulationTimeStep;
+	}
+
+	public double getTheta() {
+		return theta;
+	}
+
+	public void setTheta(double theta) {
+		this.theta = theta;
+	}
+
+	public double getAngularVel() {
+		return angularVel;
+	}
+
+	public void setAngularVel(double angularVel) {
+		this.angularVel = angularVel;
+	}
+
+	public double getOldTheta() {
+		return oldTheta;
+	}
+
+	public void setOldTheta(double oldTheta) {
+		this.oldTheta = oldTheta;
+	}
+
+	public View getView() {
+		return view;
+	}
+
+	public Nail getNail() {
+		return nail;
 	}
 }
