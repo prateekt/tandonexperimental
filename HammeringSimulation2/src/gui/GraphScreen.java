@@ -15,48 +15,68 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.chart.util.*;
+import java.util.*;
+import java.awt.*;
 
-public class GraphScreen extends JPanel {
+public class GraphScreen extends Screen {
 	
 	/**
 	 * The graph image to draw
 	 */
-	private Image myGraph = null;
+	protected Image myGraph = null;
 	
 	/**
 	 * The parent frame of this panel.
 	 */
-	private Component owner;
-
-	/**
-	 * The instantaneous plot series for noise
-	 */
-	private XYSeries instNoiseSeries;
-
-	/**
-	 * The plot series for cumulative noise
-	 */
-	private XYSeries cumNoiseSeries;
+	protected Component owner;
 	
 	/**
 	 * The master series
 	 */
-	private XYSeriesCollection allSeries;
+	protected XYSeriesCollection allSeries;
 	
 	/**
 	 * The title for the plot
 	 */
-	private String title; 
+	protected String title; 
 	
-	public GraphScreen(Component owner, String axis) {
-    	instNoiseSeries = new XYSeries("Instantaneous Noise: " + axis + " Axis");
-    	cumNoiseSeries = new XYSeries("Cumulative Noise: " + axis + " Axis");
-		allSeries = new XYSeriesCollection(instNoiseSeries);
-		allSeries.addSeries(cumNoiseSeries);
-    	setLayout(null);
-    	setSize(300,300);
-    	this.owner = owner;
-	}
+	/**
+	 * X Axis Label
+	 */
+	protected String xAxisLabel;
+	
+	/**
+	 * Y Axis Label
+	 */
+	protected String yAxisLabel;
+		
+	/**
+	 * Whether to save the graph or not to a file upon redraw.
+	 */
+	protected boolean save;
+	
+	/**
+	 * The file name to save to.
+	 */
+	protected String saveFileName;
+	
+	/**
+	 * CTR
+	 * @param owner
+	 * @param title
+	 * @param xAxisLabel
+	 * @param yAxisLabel
+	 */
+	public GraphScreen(Component owner, String title, String xAxisLabel, String yAxisLabel) {
+		super(null,null);
+		allSeries = new XYSeriesCollection();
+		this.owner = owner;
+		this.title = title;
+		this.xAxisLabel = xAxisLabel;
+		this.yAxisLabel = yAxisLabel;
+		save = false;
+		saveFileName = "";
+ 	}
 	
     /**
      * The method to draw the graph.
@@ -76,32 +96,98 @@ public class GraphScreen extends JPanel {
      */
     public BufferedImage generateCurrentChart() {
 		JFreeChart chart = ChartFactory.createXYLineChart
-        	("Noise Profile",  // Title
-			"Time",           // X-Axis label
-		     "Noise",           // Y-Axis label
+        	(title,  // Title
+			 xAxisLabel,           // X-Axis label
+		     yAxisLabel,           // Y-Axis label
 		     allSeries,          // Dataset
 		     PlotOrientation.VERTICAL,
 		     true,
 		     true,
 		     true 
         );
-
-/*        try {
-            ChartUtilities.saveChartAsJPEG(new File("noise.jpg"), chart, 300,
-                300);
-        } catch (Exception e) {
-            System.out.println("Problem occurred creating chart.");
-        }*/
+		
+		if(save) {
+	        try {
+	            ChartUtilities.saveChartAsJPEG(new File(saveFileName), chart, 300, 300);
+	        } catch (Exception e) {
+	            System.out.println("Problem occurred creating chart.");
+	        }
+		}
+		
 		return chart.createBufferedImage(300, 300);
    }
-    
-   public void addInstNoiseSeriesPoint(double t, double val)  {
-	   instNoiseSeries.add(t, val);
-	   repaint();
-   }
-   
-   public void addCumNoiseSeriesPoint(double t, double val) {
-	   cumNoiseSeries.add(t,val);
-	   repaint();
-   }
+
+	public Image getMyGraph() {
+		return myGraph;
+	}
+
+	public void setMyGraph(Image myGraph) {
+		this.myGraph = myGraph;
+	}
+
+	public Component getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Component owner) {
+		this.owner = owner;
+	}
+
+	public XYSeriesCollection getAllSeries() {
+		return allSeries;
+	}
+
+	public void setAllSeries(XYSeriesCollection allSeries) {
+		this.allSeries = allSeries;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getXAxisLabel() {
+		return xAxisLabel;
+	}
+
+	public void setXAxisLabel(String axisLabel) {
+		xAxisLabel = axisLabel;
+	}
+
+	public String getYAxisLabel() {
+		return yAxisLabel;
+	}
+
+	public void setYAxisLabel(String axisLabel) {
+		yAxisLabel = axisLabel;
+	}
+
+	public boolean isSave() {
+		return save;
+	}
+
+	public void setSave(boolean save) {
+		this.save = save;
+	}
+
+	public String getSaveFileName() {
+		return saveFileName;
+	}
+
+	public void setSaveFileName(String saveFileName) {
+		this.saveFileName = saveFileName;
+	} 
+	
+	public void addSeries(XYSeries series) {
+		allSeries.addSeries(series);
+		repaint();
+	}
+	
+	public void removeSeries(int seriesIndex) {
+		allSeries.removeSeries(seriesIndex);
+		repaint();
+	}
 }

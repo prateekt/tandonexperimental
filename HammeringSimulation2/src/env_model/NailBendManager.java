@@ -1,4 +1,4 @@
-package src.model;
+package src.env_model;
 
 public class NailBendManager {
 	

@@ -1,4 +1,4 @@
-package src.model;
+package src.env_model;
 
 import java.awt.*;
 
@@ -253,4 +253,33 @@ public class Nail {
 	public void setLastAmountBentUpdate(double lastAmountBentUpdate) {
 		this.lastAmountBentUpdate = lastAmountBentUpdate;
 	}
+	
+	public String getNailStateDesc() {
+		if(nailIn()) {
+			return "The nail is in.";
+		}
+		if(nailBent()) {
+			return "The nail is bent.";
+		}
+		
+		return "The nail is " + amountIntoBoard + " into board w/ " + amountBent + " bent.";
+	}
+
+	public int getNailState() {
+
+		//state 0 - HIT_STATE
+		//state 1 - NAILING_COMPLETE
+		//state 2 - NAIL_BENT
+		//nail in takes precedence over nail bent
+		
+		if(nailIn()) {
+			return 1;
+		}
+		if(nailBent()) {
+			return 2;
+		}
+		
+		return 0;
+	}
+
 }
