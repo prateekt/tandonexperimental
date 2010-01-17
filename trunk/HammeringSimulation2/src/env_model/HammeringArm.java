@@ -1,9 +1,9 @@
-package src.model;
+package src.env_model;
 
 import java.awt.*;
 import java.awt.event.*;
 
-import src.gui.View;
+import src.gui.*;
 
 public class HammeringArm {
 	
@@ -39,7 +39,7 @@ public class HammeringArm {
 		oldTheta = theta;
 		theta = 90;
 		angularVel = 0;
-		if(view!=null) {
+		if(view!=null && view instanceof RealTimeView) {
 			view.repaint();
 		}
 	}
@@ -83,7 +83,7 @@ public class HammeringArm {
 	public VisualResult executeSwing(double swingTheta, double angularAccel) {
 		oldTheta = theta;
 		theta = swingTheta;
-		if(view!=null) {
+		if(view!=null && view instanceof RealTimeView) {
 			view.repaint();
 		}
 		
@@ -109,9 +109,9 @@ public class HammeringArm {
 			zNoise+=noise;			
 	
 			//update view
-			if(view!=null) {
-				view.getGraphScreen().addInstNoiseSeriesPoint(t, noise);
-				view.getGraphScreen().addCumNoiseSeriesPoint(t, zNoise);
+			if(view!=null && view instanceof RealTimeView) {
+				((RealTimeView) view).getNoiseScreen().addInstNoiseSeriesPoint(t, noise);
+				((RealTimeView) view).getNoiseScreen().addCumNoiseSeriesPoint(t, zNoise);
 			}
 			
 			//update t
@@ -119,9 +119,10 @@ public class HammeringArm {
 			
 			//repaint view
 			try {
-				if(view!=null)
+				if(view!=null && view instanceof RealTimeView) {
 					view.repaint();
-//				Thread.sleep(1000);
+					Thread.sleep(1000);
+				}
 			}
 			catch(Exception e) {
 				e.printStackTrace();

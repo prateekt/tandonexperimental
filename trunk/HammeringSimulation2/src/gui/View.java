@@ -1,61 +1,54 @@
 package src.gui;
 
 import javax.swing.*;
-
-import src.model.HammeringArm;
-import src.model.Nail;
-
 import java.awt.*;
-import javax.swing.JPanel;
-import org.jfree.chart.ChartUtilities;
-import java.io.*;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-import java.io.*;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 
-/**
- * @author Prateek Tandon
- */
+import src.env_model.*;
+
 public class View extends JFrame {
-
-	private Nail nail;
-	private HammeringArm arm;
 	
-	private VisualizationScreen visScreen;
-	private GraphScreen graphScreen;
-	private BendScreen bendScreen;
-	
-	public View(Nail nail, HammeringArm arm) {
-		this.nail = nail;
-		this.arm = arm;
-		visScreen = new VisualizationScreen(nail, arm);
-		graphScreen = new GraphScreen(this, "Z");
-		bendScreen = new BendScreen(nail,arm);
+	//arm and nail
+	protected HammeringArm arm;
+	protected Nail nail;
+	protected Screen[] screens;
 		
+	public View(HammeringArm arm, Nail nail) {
+		this.arm = arm;
+		this.nail = nail;
+	}
+	
+	public void doLayout2() {
 		getContentPane().setBackground(Color.WHITE);
 		setLayout(null);
-		getContentPane().add(bendScreen);
-		getContentPane().add(visScreen);
-		getContentPane().add(graphScreen);
+		int x=0, y=0, horScreensLaid = 0;
+		for(Screen screen : screens) {
+			getContentPane().add(screen);
+			screen.setBounds(x,y,300,300);
+			horScreensLaid++;
+			x+=300;
+			
+			if(horScreensLaid==3) {
+				horScreensLaid=0;
+				x=0;
+				y+=300;
+			}			
+		}
 		
-		visScreen.setBounds(0,0,300,300);
-		graphScreen.setBounds(300,0,300,300);
-		bendScreen.setBounds(600,0,300,300);
-		setSize(910,350);
+		int length=0;
+		if(y >= 300) {
+			length = 920;
+		}
+		else {
+			length = horScreensLaid*300 + 20;
+		}
+		
+		//boundary case
+		if(y==0) {
+			y=300;
+		}
+		
+		setSize(length,y+50);
 		setVisible(true);
-	}
-
-	public Nail getNail() {
-		return nail;
-	}
-
-	public void setNail(Nail nail) {
-		this.nail = nail;
 	}
 
 	public HammeringArm getArm() {
@@ -66,19 +59,11 @@ public class View extends JFrame {
 		this.arm = arm;
 	}
 
-	public VisualizationScreen getVisScreen() {
-		return visScreen;
+	public Nail getNail() {
+		return nail;
 	}
 
-	public void setVisScreen(VisualizationScreen visScreen) {
-		this.visScreen = visScreen;
-	}
-
-	public GraphScreen getGraphScreen() {
-		return graphScreen;
-	}
-
-	public void setGraphScreen(GraphScreen graphScreen) {
-		this.graphScreen = graphScreen;
+	public void setNail(Nail nail) {
+		this.nail = nail;
 	}
 }
