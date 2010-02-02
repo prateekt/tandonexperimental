@@ -16,7 +16,6 @@ public class CodedPopulationView extends View {
 	 */
 	private XYSeriesCache firingRateSeries;
 
-	
 	public CodedPopulationView(String populationTitle) {
 		super(null,null);
 		setTitle(populationTitle);
@@ -31,13 +30,18 @@ public class CodedPopulationView extends View {
 	}
 	
 	public void addPreferredVal(double neuronNum, double pref) {
+		if(neuronNum==0) {
+			preferredValsSeries.clear();
+		}
 		preferredValsSeries.add(neuronNum, pref);
 		repaint();
 	}
 	
 	public void addFiringRateVal(double neuronNum, double rate) {
+		if(neuronNum==0) {
+			firingRateSeries.clear();
+		}
 		firingRateSeries.add(neuronNum, rate);
 		repaint();
 	}
-
 }

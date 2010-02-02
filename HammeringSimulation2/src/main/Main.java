@@ -18,8 +18,10 @@ public class Main {
 	public static void main(String[] args) {
 		Nail n = new Nail(20,20,40,1);
 		HammeringArm h = new HammeringArm(100,100,20,2);
-//		RealTimeView v = new RealTimeView(h,n);
-		Controller rlctrl = new PopulationNetworkController(h,n,10);
+		RealTimeView v2 = new RealTimeView(h,n);
+		h.setView(v2);
+//		Controller rlctrl = new RLController2(n,h);
+		Controller rlctrl = new PopulationNetworkController_basic(h,n,10);
 		ControllerView v = new ControllerView(h,n);
 		rlctrl.setControllerView(v);
 		h.setNail(n);
@@ -30,6 +32,7 @@ public class Main {
 		for(int x=0; x < 500; x++) {
 			NAIL_NUMBER = x;
 			rlctrl.setNailNumber(x);
+
 			//50 time steps
 			rlctrl.control(50);
 			n.reset();

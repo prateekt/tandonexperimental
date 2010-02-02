@@ -21,7 +21,8 @@ public class CodedPopulation {
 		for(int x=0; x < numNeurons; x++) {
 			double val =  maxValueForPopulation/numNeurons*x;
 			preferredVals[x] = val;
-			view.addPreferredVal(x, preferredVals[x]);
+			if(view!=null)
+				view.addPreferredVal(x, preferredVals[x]);
 		}		
 	}
 	
@@ -51,7 +52,10 @@ public class CodedPopulation {
 			double x = value;
 			double coeff = 1 / Math.sqrt(2*Math.PI*Math.pow(sigma, 2));
 			firingRate[z] = coeff*Math.exp((-1*Math.pow(p-x,2.0)) / (2*Math.pow(sigma,2.0)));
-			view.addFiringRateVal(z, firingRate[z]);
+
+			if(view!=null) {
+				view.addFiringRateVal(z, firingRate[z]);
+			}
 	//		debugScreen.addPreferredValsSeriesPoint(z, firingRate[z]);
 			//			System.out.println("FIRING RATE: " + firingRate[z]);
 		}
@@ -62,9 +66,9 @@ public class CodedPopulation {
 		//compute s (sum of firing rates)
 		double S = 0.0;
 		for(int x=0; x < numNeurons; x++) {
-			S+= firingRate[x];
+			S+= firingRate[x];			
 		}
-		
+//		System.out.println("S: " + S);
 		double rtn=0.0;
 		for(int z=0; z < numNeurons; z++) {
 			rtn+=firingRate[z]/S*preferredVals[z]; 
@@ -98,9 +102,12 @@ public class CodedPopulation {
 
 	public void setFiringRate(double[] firingRate) {
 		this.firingRate = firingRate;
-		for(int z=0; z < firingRate.length; z++)
-			view.addFiringRateVal(z, firingRate[z]);
-		view.repaint();
+		if(view!=null) {
+			for(int z=0; z < firingRate.length; z++) {
+				view.addFiringRateVal(z, firingRate[z]);
+			}
+			view.repaint();
+		}
 	}
 
 	public int getNumNeurons() {

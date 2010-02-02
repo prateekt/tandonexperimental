@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import src.gui.*;
+import src.util.Vector2;
 
 public class HammeringArm {
 	
@@ -23,6 +24,12 @@ public class HammeringArm {
 	//View variable
 	protected View view;
 	protected Nail nail;
+	
+	//ARM discrete params
+	public static final double NUM_SWING_THETA_PARAMS = 120;
+	public static final double NUM_ACCEL_PARAMS = 3;
+	
+
 	
 	public HammeringArm(double l1_length, double l2_length, double hammerRadius, double hammerMass) {
 		this.l1_length = l1_length;
@@ -90,7 +97,6 @@ public class HammeringArm {
 		int t=1;
 		double zNoise = 0;
 		while(theta >= 0) {
-			
 			//update thetas
 			angularVel = angularAccel*simulationTimeStep*t;
 			oldTheta = theta;
