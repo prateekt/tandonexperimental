@@ -33,6 +33,13 @@ public abstract class Controller {
 		//do forever
 		outer:for(int t=0; t < steps; t++) {
 			
+			try {
+				Thread.sleep(1000);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			
 			//select an action and execute it
 			int[] action = selectAction((int)amountIntoBoard, (int)amountBent);
 			VisualResult vr = executeAction(action);
@@ -99,5 +106,4 @@ public abstract class Controller {
 	public void setNailNumber(int nailNumber) {
 		this.nailNumber = nailNumber;
 	}
-	
 }

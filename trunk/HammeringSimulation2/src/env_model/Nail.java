@@ -2,22 +2,24 @@ package src.env_model;
 
 import java.awt.*;
 
+import src.util.Vector2;
+
 
 public class Nail {
 	
 	//constants
 	protected static final Vector2 nailStart = new Vector2(50,200);
 	protected static final double NAIL_OFFSET = 10;
-	protected static final double NAIL_BENT_RIGHT = 180;
+	public static final double NAIL_BENT_RIGHT = 180;
 	protected static final double NAIL_BENT_LEFT = 0;
-	protected static final double BOARD_LENGTH = 10;
+	public static final double BOARD_LENGTH = 50;
 	
 	protected double r1;
 	protected double r2;
 	protected double length;
 	protected double nailMass;
 	protected double maxNormalForce = 1000;
-	protected double frictionCoeff = 0.1;
+	protected double frictionCoeff = 0.01;
 	
 	//state variables
 	protected Vector2 nailHeadStart;
