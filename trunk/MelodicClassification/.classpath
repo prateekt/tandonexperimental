@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+	<classpathentry kind="lib" path="/Users/prateek/jars/ant-launcher.jar"/>
+	<classpathentry kind="lib" path="/Users/prateek/jars/ant.jar"/>
+	<classpathentry kind="lib" path="/Users/prateek/jars/antlr.jar"/>
+	<classpathentry kind="lib" path="/Users/prateek/jars/core.jar"/>
+	<classpathentry kind="lib" path="/Users/prateek/jars/ecj.jar"/>
+	<classpathentry kind="lib" path="/Users/prateek/jars/jna.jar"/>
+	<classpathentry kind="lib" path="/Users/prateek/jars/pde.jar"/>
+	<classpathentry kind="lib" path="/Users/prateek/jars/quaqua.jar"/>
+	<classpathentry kind="lib" path="/Users/prateek/Documents/workspace/MelodicClassification/drivers/jcommon-1.0.14.jar"/>
+	<classpathentry kind="lib" path="/Users/prateek/Documents/workspace/MelodicClassification/drivers/jfreechart-1.0.11.jar"/>
+	<classpathentry kind="lib" path="/Users/prateek/Documents/workspace/MelodicClassification/drivers/jfugue-4.0.3 2.jar"/>
+	<classpathentry kind="lib" path="/Users/prateek/Documents/workspace/MelodicClassification/drivers/matlabcontrol-3.01.jar"/>
+	<classpathentry kind="lib" path="/Users/prateek/Documents/workspace/MelodicClassification/drivers/weka.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
