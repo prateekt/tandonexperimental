@@ -1,0 +1,97 @@
+<project name="MelodyRecognizerBuild" default="targets" basedir=".">
+
+  <!-- set global properties for this build -->
+    <property name="src" location="src"/>
+    <property name="build" location="build"/>
+	<property name="drivers" location="drivers"/>
+	<property name="db" location ="db"/>
+    <property name="jcommon.jar" location="drivers/jcommon-1.0.14.jar"/>
+    <property name="jfreechart.jar" location="drivers/jfreechart-1.0.11.jar"/>
+    <property name="jfugue.jar" location="drivers/jfugue-4.0.3.jar"/>
+    <property name="matlabcontrol.jar" location="drivers/matlabcontrol-3.01.jar"/>
+    <property name="weka.jar" location="drivers/weka.jar"/>
+	
+    <path id="project.path">
+        <pathelement location="${build}"/>
+    	<pathelement location="${jcommon.jar}"/>
+    	<pathelement location="${jfreechart.jar}"/>
+        <pathelement location="${jfugue.jar}"/>
+        <pathelement location="${matlabcontrol.jar}"/>
+        <pathelement location="${weka.jar}"/>
+    </path>
+
+    <!-- Print out a listing of the most important ant targets -->
+    <target name="targets">
+               <echo>
+compile             Compile the source code
+test                Compiles and tests the source code by running junit tests
+run.gui             Run the gui verion of the FAA Controller
+javadoc             Create javadoc of the source code
+zip                 Create a zip and stores it in versions (for local use/not on subversion)
+clean               Delete all the compiled files
+        </echo>
+    </target>
+
+    <!-- A basic setup target -->
+    <target name="init">
+        <tstamp/>
+        <mkdir dir="${build}"/>
+    </target>
+
+    <!-- Compiles the source files and copies all relevant files to the build directory -->
+    <target name="compile" depends="init"
+        description="compile the source ">
+        <javac srcdir="${src}" classpathref="project.path" destdir="${build}" debug="true">
+		<compilerarg value="-Xlint:unchecked"/>
+	</javac>
+
+    </target>
+
+	<!-- This is the ant task that runs the gui version of the DBLoader-->
+    <target name="DBLoader.gui" depends="compile">
+        <java classname="DBLoaderRunner" classpathref="project.path" fork="true" maxmemory="2056m">
+   		</java>
+    </target>
+	
+	<!-- This is the ant task that runs the gui version of the DBRecognizer-->
+    <target name="DBRecognizer.gui" depends="compile">
+        <java classname="DBRecognizerRunner" classpathref="project.path" fork="true" maxmemory="2056m">
+   		</java>
+    </target>
+	
+    <!-- Create a nice package of all the source files and ant build files -->
+    <target name="zip">
+        <input message="Enter the version number:" addproperty="version"/>
+
+        <antcall target="clean"/>
+
+        <mkdir dir="${dist}"/>
+        <copy todir="${dist}/src">
+            <fileset dir="${src}"/>
+        </copy>
+
+        <mkdir dir="${db}"/>
+        <copy todir="${dist}/db">
+            <fileset dir="${db}"/>
+        </copy>
+
+		<mkdir dir="${dist}/drivers"/>
+        <copy todir="${dist}/drivers">
+            <fileset dir="${drivers}"/>
+        </copy>
+
+        <copy todir="${dist}" file="build.xml"/>
+
+		<mkdir dir="${versions}/MelodyRecognizer${version}"/>
+        <zip destfile="${versions}/MelodyRecognizer${version}/MelodyRecognizer${version}.zip">
+            <zipfileset dir="${dist}" prefix="MelodyRecognizer${version}"/>
+        </zip>
+
+        <delete dir="${dist}"/>
+    </target>
+
+    <!-- Cleans your environment.. deletes all generated files -->
+    <target name="clean">
+        <delete dir="${build}"/>
+    </target>
+</project>
